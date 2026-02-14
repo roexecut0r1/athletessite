@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Answers Through Athletes</title>
-    <link rel="icon" type="image/jpg" href="logo.jpg">
+    <title>Our Story | Answers Through Athletes</title>
+    <link rel="icon" type="image/jpg" href="logo.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,9 +19,7 @@
         --primary: #364fc7;
         --primary-deep: #2b3fa5;
         --teal: #0f766e;
-        --gold: #f59e0b;
-        --coral: #ef4444;
-        --card: rgba(255, 255, 255, 0.85);
+        --card: rgba(255, 255, 255, 0.9);
       }
 
       * {
@@ -70,13 +68,8 @@
         height: 120px;
         object-fit: cover;
         border-radius: 13px;
-        border: 0px solid rgba(54, 79, 199, 0.2);
         background: #fff;
         padding: 4px;
-      }
-
-      .brand-text {
-        line-height: 1;
       }
 
       .brand-text strong {
@@ -110,11 +103,6 @@
         background: var(--primary);
         color: white;
         border: 1px solid transparent;
-        transition: background 0.25s ease;
-      }
-
-      .cta-btn:hover {
-        background: var(--primary-deep);
       }
 
       .hero {
@@ -122,7 +110,7 @@
         border-radius: 30px;
         overflow: hidden;
         position: relative;
-        min-height: 72vh;
+        min-height: 48vh;
         display: grid;
         align-items: center;
         color: white;
@@ -134,12 +122,11 @@
         position: absolute;
         inset: 0;
         background: linear-gradient(120deg, rgba(31, 41, 55, 0.84), rgba(54, 79, 199, 0.67), rgba(15, 118, 110, 0.62)),
-          url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80")
+          url("https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1800&q=80")
             center/cover;
       }
 
       .hero-content {
-        max-width: 1200px; 
         position: relative;
         z-index: 1;
         padding: clamp(2rem, 6vw, 5rem);
@@ -149,7 +136,6 @@
       .eyebrow {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
         padding: 0.35rem 0.8rem;
         border-radius: 999px;
         border: 1px solid rgba(255, 255, 255, 0.4);
@@ -159,39 +145,19 @@
       }
 
       h1 {
-        max-width: 30ch;
-        font-size: clamp(1.6rem, 4vw, 3.6rem);
+        font-size: clamp(2rem, 4vw, 4rem);
         line-height: 1.04;
         margin: 0;
         letter-spacing: -0.03em;
       }
 
-      .hero p {
-        margin-top: 1.2rem;
-        font-size: clamp(1rem, 1.8vw, 1.24rem);
-        line-height: 1.6;
-        color: #eef2ff;
-      }
-
-      .hero-actions {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        margin-top: 1.6rem;
-      }
-
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.16);
-        border: 1px solid rgba(255, 255, 255, 0.46);
-      }
-
-      .journey {
-        margin: -2rem auto 4rem;
+      .story {
+        margin: -1rem auto 4rem;
         position: relative;
         z-index: 2;
       }
 
-      .journey-panel {
+      .story-panel {
         background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 251, 235, 0.87));
         border: 1px solid rgba(148, 163, 184, 0.22);
         border-radius: 24px;
@@ -199,65 +165,14 @@
         box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
       }
 
-      .journey-panel h2 {
-        margin: 0 0 1rem;
-        color: var(--primary);
-      }
-
-      .journey-track {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 0.85rem;
-      }
-
-      .journey-track li {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0.8rem;
-        align-items: start;
-        background: var(--card);
-        border-radius: 14px;
-        padding: 0.9rem 1rem;
-        border: 1px solid rgba(203, 213, 225, 0.7);
-      }
-
-      .step-badge {
-        display: inline-grid;
-        place-items: center;
-        min-width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        color: white;
-        font-weight: 800;
-        font-size: 0.88rem;
-      }
-
-      .step-badge.one {
-        background: var(--primary);
-      }
-
-      .step-badge.two {
-        background: var(--teal);
-      }
-
-      .step-badge.three {
-        background: var(--gold);
-      }
-
-      .step-badge.four {
-        background: var(--coral);
-      }
-
-      .journey-track strong {
-        display: block;
-        margin-bottom: 0.2rem;
-      }
-
-      .journey-track p {
-        margin: 0;
+      .story-panel p {
+        margin: 0 0 1.2rem;
         color: var(--muted);
+        line-height: 1.75;
+      }
+
+      .story-panel p:last-child {
+        margin-bottom: 0;
       }
 
       @media (max-width: 900px) {
@@ -277,7 +192,7 @@
   <body>
     <header class="site-header">
       <div class="container nav">
-        <a class="brand" href="#" aria-label="Answers Through Athletes home">
+        <a class="brand" href="index.html" aria-label="Answers Through Athletes home">
           <img class="logo" src="logo.jpg" alt="Answers Through Athletes logo" />
           <div class="brand-text">
             <strong>Answers Through Athletes</strong>
@@ -290,7 +205,6 @@
           <a href="#">Partners</a>
           <a href="#">Impact</a>
           <a href="#">Get Involved</a>
-      
         </nav>
 
         <a class="cta-btn" href="#">Donate</a>
@@ -298,54 +212,34 @@
     </header>
 
     <main class="container">
-      <section class="hero" aria-label="Hero section">
+      <section class="hero" aria-label="Our Story hero section">
         <div class="hero-content">
-          <div class="eyebrow">Driven by athletes • Built for communities (or other slogan)</div>
-          <h1>Where Athletes and Real-World Answers Come Together</h1>
-          <p>
-            Answers Through Athletes does whatever it does dude
-          </p>
-          <div class="hero-actions">
-            <a class="cta-btn" href="our-story.html">Our Story</a>
-            <a class="cta-btn btn-secondary" href="#">Become a Partner</a>
-          </div>
+          <div class="eyebrow">Driven by athletes • Built for communities</div>
+          <h1>Our Story</h1>
         </div>
       </section>
 
-      <section class="journey" aria-label="How our impact works">
-        <div class="journey-panel">
-          <h2>How the Impact Journey Works</h2>
-          <ol class="journey-track">
-            <li>
-              <span class="step-badge one">1</span>
-              <div>
-                <strong>whatever step 1 is (we can remove steps if there are too many)</strong>
-                <p>discription</p>
-              </div>
-            </li>
-            <li>
-              <span class="step-badge two">2</span>
-              <div>
-                <strong>whatever step 2 is</strong>
-                <p>discription</p>
-              </div>
-            </li>
-            <li>
-              <span class="step-badge three">3</span>
-              <div>
-                <strong>whatever step 3 is</strong>
-                <p>discription</p>
-              </div>
-            </li>
-            <li>
-              <span class="step-badge four">4</span>
-              <div>
-                <strong>whatever step 4 is</strong>
-                <p>discription</p>
-              </div>
-            </li>
-          </ol>
-        </div>
+      <section class="story" aria-label="Answers Through Athletes story">
+        <article class="story-panel">
+          <p>
+            Answers Through Athletes (ATA) is a Florida nonprofit that was established by a pair of siblings who, as high school athletes, sustained injuries, illnesses, and setbacks. Despite being unable to participate in the sports they are passionate about, they refuse to be sidelined. Together, they have made it their mission to bring awareness to the struggles athletes face and to provide opportunities for injured athletes to stay relevant and involved in the sports they love. In April 2025, Answers Through Athletes was born.
+          </p>
+          <p>
+            In its inaugural year, Answers Through Athletes was able to volunteer and raise money to support other organizations. One of their first projects was working with the City of Tallahassee and Gulf Winds Track Club to staff the Summer On The Track Series for the community. ATA was able to recognize and hand out awards to youth winners each week, and help direct and guide children learning how to run track distances. At the end of the track series, ATA was proud to raise $200, which was enough funding to provide popsicles to each participant of the final track competition in celebration of a successful summer!
+          </p>
+          <p>
+            Answers Through Athletes’ support of Gulf Winds Track Club continued throughout the year. ATA was blessed to serve the community by staffing the GWTC Springtime Tallahassee hospitality table at the 5K/10K; providing support and directional assistance to runners at GWTC Tallahassee’s Thanksgiving Day Turkey Trot 10K/15K; and supporting the GWTC Tannenbaum 6K. ATA also supported Visit Tallahassee by volunteering to prepare athlete bags and proudly hanging each athletic team’s country’s flag at Tallahassee’s prestigious Apalachee Regional Park for the 2026 World Cross Country Championships.
+          </p>
+          <p>
+            In honor of its founders, Answers Through Athletes raised $100 to purchase comfortable, anti-slip socks and make bracelets for hospitalized children at Shands Children's Hospital Pediatric Patient Care, specifically Unit 10-5 Pediatric Med Surg. In addition, ATA provided a $50 donation from fundraising to the UF Health Pediatric Cardiac Intensive Care Unit Comfort Fund. ATA also raised and donated $50 to the Johns Hopkins All Children's Hospital Foundation. These were hospitals where the founders of our nonprofit spent time hospitalized in 2025 and 2026.
+          </p>
+          <p>
+            In an effort to support the local community, Answers Through Athletes proudly created a bike riding fundraiser. By soliciting sponsors for each mile ridden, ATA was able to provide the TMH Foundation with a generous monetary gift of $500 to be used toward furthering care for pediatric patients in the founders’ hometown. It is ATA’s wish that, in the not-so-distant future, children with diagnoses and injuries like theirs will not have to leave the area to receive care.
+          </p>
+          <p>
+            Reflecting upon their first year, the founders of Answers Through Athletes are proud of their success in supporting the organizations that have supported them. The work they have done has been a labor of love. They look forward to the future and what ATA will grow to accomplish.
+          </p>
+        </article>
       </section>
     </main>
   </body>
