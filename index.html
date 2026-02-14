@@ -1,637 +1,350 @@
-diff --git a/index.html b/index.html
-index fec8d1461e784eb88fff1f2113779de624d76b3d..99791822b81c590bcd10e8f893511751e2910e08 100644
---- a/index.html
-+++ b/index.html
-@@ -1,282 +1,350 @@
--<!DOCTYPE html>
--<html lang="en">
--  <head>
--    <meta charset="UTF-8" />
--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
--    <title>Answers Through Athletes</title>
--    <link rel="preconnect" href="https://fonts.googleapis.com" />
--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
--    <link
--      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
--      rel="stylesheet"
--    />
--    <style>
--      :root {
--        --bg: #f4f7fb;
--        --ink: #0f172a;
--        --muted: #475569;
--        --primary: #2563eb;
--        --primary-deep: #1d4ed8;
--        --accent: #10b981;
--        --card: rgba(255, 255, 255, 0.84);
--      }
--
--      * {
--        box-sizing: border-box;
--      }
--
--      body {
--        margin: 0;
--        font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
--        color: var(--ink);
--        background: radial-gradient(circle at top right, #dbeafe 0%, var(--bg) 42%);
--      }
--
--      .site-header {
--        position: sticky;
--        top: 0;
--        z-index: 3;
--        background: rgba(255, 255, 255, 0.95);
--        backdrop-filter: blur(10px);
--        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
--      }
--
--      .container {
--        width: min(1120px, 92vw);
--        margin: 0 auto;
--      }
--
--      .nav {
--        display: flex;
--        align-items: center;
--        justify-content: space-between;
--        min-height: 84px;
--        gap: 2rem;
--      }
--
--      .brand {
--        display: flex;
--        align-items: center;
--        gap: 0.8rem;
--        text-decoration: none;
--        color: inherit;
--      }
--
--      .brand-mark {
--        width: 42px;
--        height: 42px;
--        border-radius: 50%;
--        display: grid;
--        place-items: center;
--        color: white;
--        font-weight: 800;
--        background: linear-gradient(135deg, var(--primary), #0ea5e9);
--      }
--
--      .brand-text {
--        line-height: 1;
--      }
--
--      .brand-text strong {
--        display: block;
--        font-size: 1.1rem;
--      }
--
--      .brand-text span {
--        color: var(--muted);
--        font-size: 0.84rem;
--      }
--
--      .nav-links {
--        display: flex;
--        gap: 1.3rem;
--        flex-wrap: wrap;
--      }
--
--      .nav-links a {
--        text-decoration: none;
--        color: var(--ink);
--        font-weight: 700;
--        font-size: 0.92rem;
--      }
--
--      .cta-btn {
--        text-decoration: none;
--        padding: 0.65rem 1.2rem;
--        border-radius: 999px;
--        font-weight: 800;
--        background: var(--primary);
--        color: white;
--        border: 1px solid transparent;
--        transition: background 0.25s ease;
--      }
--
--      .cta-btn:hover {
--        background: var(--primary-deep);
--      }
--
--      .hero {
--        margin: 2rem auto 1.5rem;
--        border-radius: 30px;
--        overflow: hidden;
--        position: relative;
--        min-height: 72vh;
--        display: grid;
--        align-items: center;
--        color: white;
--        box-shadow: 0 28px 65px rgba(15, 23, 42, 0.2);
--      }
--
--      .hero::before {
--        content: "";
--        position: absolute;
--        inset: 0;
--        background: linear-gradient(122deg, rgba(15, 23, 42, 0.84), rgba(37, 99, 235, 0.8)),
--          url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80")
--            center/cover;
--      }
--
--      .hero-content {
--        position: relative;
--        z-index: 1;
--        padding: clamp(2rem, 6vw, 5rem);
--        max-width: 760px;
--      }
--
--      .eyebrow {
--        display: inline-flex;
--        align-items: center;
--        gap: 0.5rem;
--        padding: 0.35rem 0.8rem;
--        border-radius: 999px;
--        border: 1px solid rgba(255, 255, 255, 0.4);
--        font-size: 0.85rem;
--        margin-bottom: 1rem;
--      }
--
--      h1 {
--        font-size: clamp(2rem, 5.4vw, 4.2rem);
--        line-height: 1.04;
--        margin: 0;
--        letter-spacing: -0.03em;
--      }
--
--      .hero p {
--        margin-top: 1.2rem;
--        font-size: clamp(1rem, 1.8vw, 1.24rem);
--        line-height: 1.6;
--        color: #e2e8f0;
--      }
--
--      .hero-actions {
--        display: flex;
--        gap: 0.75rem;
--        flex-wrap: wrap;
--        margin-top: 1.6rem;
--      }
--
--      .btn-secondary {
--        background: rgba(255, 255, 255, 0.2);
--        border: 1px solid rgba(255, 255, 255, 0.46);
--      }
--
--      .impact-strip {
--        margin: -3rem auto 4rem;
--        position: relative;
--        z-index: 2;
--      }
--
--      .impact-grid {
--        display: grid;
--        grid-template-columns: repeat(3, minmax(0, 1fr));
--        gap: 1rem;
--      }
--
--      .impact-card {
--        background: var(--card);
--        border: 1px solid rgba(148, 163, 184, 0.28);
--        backdrop-filter: blur(5px);
--        border-radius: 18px;
--        padding: 1.15rem;
--      }
--
--      .impact-card strong {
--        font-size: 1.5rem;
--      }
--
--      .impact-card p {
--        margin: 0.4rem 0 0;
--        color: var(--muted);
--      }
--
--      @media (max-width: 900px) {
--        .nav {
--          flex-wrap: wrap;
--          justify-content: center;
--          padding: 0.8rem 0;
--        }
--
--        .impact-grid {
--          grid-template-columns: 1fr;
--        }
--      }
--    </style>
--  </head>
--  <body>
--    <header class="site-header">
--      <div class="container nav">
--        <a class="brand" href="#">
--          <div class="brand-mark">A</div>
--          <div class="brand-text">
--            <strong>Answers Through Athletes</strong>
--            <span>Empower. Educate. Elevate.</span>
--          </div>
--        </a>
--
--        <nav class="nav-links" aria-label="Main navigation">
--          <a href="#">Who We Are</a>
--          <a href="#">Programs</a>
--          <a href="#">Partners</a>
--          <a href="#">Impact</a>
--          <a href="#">Get Involved</a>
--        </nav>
--
--        <a class="cta-btn" href="#">Donate</a>
--      </div>
--    </header>
--
--    <main class="container">
--      <section class="hero" aria-label="Hero section">
--        <div class="hero-content">
--          <div class="eyebrow">Driven by athletes • Built for communities</div>
--          <h1>Where Athletes and Real-World Answers Come Together</h1>
--          <p>
--            Answers Through Athletes connects student-athletes, professionals, and local leaders to solve
--            meaningful community challenges through mentorship, service, and action.
--          </p>
--          <div class="hero-actions">
--            <a class="cta-btn" href="#">Our Story</a>
--            <a class="cta-btn btn-secondary" href="#">Become a Partner</a>
--          </div>
--        </div>
--      </section>
--
--      <section class="impact-strip" aria-label="Impact statistics">
--        <div class="impact-grid">
--          <article class="impact-card">
--            <strong>4,500+</strong>
--            <p>Youth reached through sports-based mentorship programs.</p>
--          </article>
--          <article class="impact-card">
--            <strong>120</strong>
--            <p>Athlete ambassadors driving workshops and local initiatives.</p>
--          </article>
--          <article class="impact-card">
--            <strong>38</strong>
--            <p>Community partners collaborating to deliver measurable outcomes.</p>
--          </article>
--        </div>
--      </section>
--    </main>
--  </body>
--</html>
-+<!DOCTYPE html>
-+<html lang="en">
-+  <head>
-+    <meta charset="UTF-8" />
-+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-+    <title>Answers Through Athletes</title>
-+    <link rel="preconnect" href="https://fonts.googleapis.com" />
-+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-+    <link
-+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
-+      rel="stylesheet"
-+    />
-+    <style>
-+      :root {
-+        --bg: #f8f4ee;
-+        --ink: #1f2937;
-+        --muted: #5b6470;
-+        --primary: #364fc7;
-+        --primary-deep: #2b3fa5;
-+        --teal: #0f766e;
-+        --gold: #f59e0b;
-+        --coral: #ef4444;
-+        --card: rgba(255, 255, 255, 0.85);
-+      }
-+
-+      * {
-+        box-sizing: border-box;
-+      }
-+
-+      body {
-+        margin: 0;
-+        font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-+        color: var(--ink);
-+        background: radial-gradient(circle at top left, #fef3c7 0%, #fce7f3 26%, #e0f2fe 55%, var(--bg) 100%);
-+      }
-+
-+      .site-header {
-+        position: sticky;
-+        top: 0;
-+        z-index: 3;
-+        background: rgba(255, 255, 255, 0.93);
-+        backdrop-filter: blur(10px);
-+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-+      }
-+
-+      .container {
-+        width: min(1120px, 92vw);
-+        margin: 0 auto;
-+      }
-+
-+      .nav {
-+        display: flex;
-+        align-items: center;
-+        justify-content: space-between;
-+        min-height: 86px;
-+        gap: 2rem;
-+      }
-+
-+      .brand {
-+        display: flex;
-+        align-items: center;
-+        gap: 0.9rem;
-+        text-decoration: none;
-+        color: inherit;
-+      }
-+
-+      .logo {
-+        width: 48px;
-+        height: 48px;
-+        object-fit: cover;
-+        border-radius: 13px;
-+        border: 2px solid rgba(54, 79, 199, 0.2);
-+        background: #fff;
-+        padding: 4px;
-+      }
-+
-+      .brand-text {
-+        line-height: 1;
-+      }
-+
-+      .brand-text strong {
-+        display: block;
-+        font-size: 1.08rem;
-+      }
-+
-+      .brand-text span {
-+        color: var(--muted);
-+        font-size: 0.83rem;
-+      }
-+
-+      .nav-links {
-+        display: flex;
-+        gap: 1.3rem;
-+        flex-wrap: wrap;
-+      }
-+
-+      .nav-links a {
-+        text-decoration: none;
-+        color: var(--ink);
-+        font-weight: 700;
-+        font-size: 0.92rem;
-+      }
-+
-+      .cta-btn {
-+        text-decoration: none;
-+        padding: 0.65rem 1.2rem;
-+        border-radius: 999px;
-+        font-weight: 800;
-+        background: var(--primary);
-+        color: white;
-+        border: 1px solid transparent;
-+        transition: background 0.25s ease;
-+      }
-+
-+      .cta-btn:hover {
-+        background: var(--primary-deep);
-+      }
-+
-+      .hero {
-+        margin: 2rem auto 1.5rem;
-+        border-radius: 30px;
-+        overflow: hidden;
-+        position: relative;
-+        min-height: 72vh;
-+        display: grid;
-+        align-items: center;
-+        color: white;
-+        box-shadow: 0 28px 65px rgba(15, 23, 42, 0.2);
-+      }
-+
-+      .hero::before {
-+        content: "";
-+        position: absolute;
-+        inset: 0;
-+        background: linear-gradient(120deg, rgba(31, 41, 55, 0.84), rgba(54, 79, 199, 0.67), rgba(15, 118, 110, 0.62)),
-+          url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80")
-+            center/cover;
-+      }
-+
-+      .hero-content {
-+        position: relative;
-+        z-index: 1;
-+        padding: clamp(2rem, 6vw, 5rem);
-+        max-width: 760px;
-+      }
-+
-+      .eyebrow {
-+        display: inline-flex;
-+        align-items: center;
-+        gap: 0.5rem;
-+        padding: 0.35rem 0.8rem;
-+        border-radius: 999px;
-+        border: 1px solid rgba(255, 255, 255, 0.4);
-+        background: rgba(15, 118, 110, 0.25);
-+        font-size: 0.85rem;
-+        margin-bottom: 1rem;
-+      }
-+
-+      h1 {
-+        font-size: clamp(2rem, 5.4vw, 4.2rem);
-+        line-height: 1.04;
-+        margin: 0;
-+        letter-spacing: -0.03em;
-+      }
-+
-+      .hero p {
-+        margin-top: 1.2rem;
-+        font-size: clamp(1rem, 1.8vw, 1.24rem);
-+        line-height: 1.6;
-+        color: #eef2ff;
-+      }
-+
-+      .hero-actions {
-+        display: flex;
-+        gap: 0.75rem;
-+        flex-wrap: wrap;
-+        margin-top: 1.6rem;
-+      }
-+
-+      .btn-secondary {
-+        background: rgba(255, 255, 255, 0.16);
-+        border: 1px solid rgba(255, 255, 255, 0.46);
-+      }
-+
-+      .journey {
-+        margin: -2rem auto 4rem;
-+        position: relative;
-+        z-index: 2;
-+      }
-+
-+      .journey-panel {
-+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 251, 235, 0.87));
-+        border: 1px solid rgba(148, 163, 184, 0.22);
-+        border-radius: 24px;
-+        padding: clamp(1.2rem, 2.4vw, 2rem);
-+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-+      }
-+
-+      .journey-panel h2 {
-+        margin: 0 0 1rem;
-+        color: var(--primary);
-+      }
-+
-+      .journey-track {
-+        list-style: none;
-+        margin: 0;
-+        padding: 0;
-+        display: grid;
-+        gap: 0.85rem;
-+      }
-+
-+      .journey-track li {
-+        display: grid;
-+        grid-template-columns: auto 1fr;
-+        gap: 0.8rem;
-+        align-items: start;
-+        background: var(--card);
-+        border-radius: 14px;
-+        padding: 0.9rem 1rem;
-+        border: 1px solid rgba(203, 213, 225, 0.7);
-+      }
-+
-+      .step-badge {
-+        display: inline-grid;
-+        place-items: center;
-+        min-width: 2rem;
-+        height: 2rem;
-+        border-radius: 50%;
-+        color: white;
-+        font-weight: 800;
-+        font-size: 0.88rem;
-+      }
-+
-+      .step-badge.one {
-+        background: var(--primary);
-+      }
-+
-+      .step-badge.two {
-+        background: var(--teal);
-+      }
-+
-+      .step-badge.three {
-+        background: var(--gold);
-+      }
-+
-+      .step-badge.four {
-+        background: var(--coral);
-+      }
-+
-+      .journey-track strong {
-+        display: block;
-+        margin-bottom: 0.2rem;
-+      }
-+
-+      .journey-track p {
-+        margin: 0;
-+        color: var(--muted);
-+      }
-+
-+      @media (max-width: 900px) {
-+        .nav {
-+          flex-wrap: wrap;
-+          justify-content: center;
-+          padding: 0.8rem 0;
-+        }
-+
-+        .brand {
-+          justify-content: center;
-+          width: 100%;
-+        }
-+      }
-+    </style>
-+  </head>
-+  <body>
-+    <header class="site-header">
-+      <div class="container nav">
-+        <a class="brand" href="#" aria-label="Answers Through Athletes home">
-+          <img class="logo" src="https://your-logo-link-goes-here.png" alt="Answers Through Athletes logo" />
-+          <div class="brand-text">
-+            <strong>Answers Through Athletes</strong>
-+            <span>Empower. Educate. Elevate.</span>
-+          </div>
-+        </a>
-+
-+        <nav class="nav-links" aria-label="Main navigation">
-+          <a href="#">Who We Are</a>
-+          <a href="#">Programs</a>
-+          <a href="#">Partners</a>
-+          <a href="#">Impact</a>
-+          <a href="#">Get Involved</a>
-+        </nav>
-+
-+        <a class="cta-btn" href="#">Donate</a>
-+      </div>
-+    </header>
-+
-+    <main class="container">
-+      <section class="hero" aria-label="Hero section">
-+        <div class="hero-content">
-+          <div class="eyebrow">Driven by athletes • Built for communities</div>
-+          <h1>Where Athletes and Real-World Answers Come Together</h1>
-+          <p>
-+            Answers Through Athletes connects student-athletes, professionals, and local leaders to solve
-+            meaningful community challenges through mentorship, service, and action.
-+          </p>
-+          <div class="hero-actions">
-+            <a class="cta-btn" href="#">Our Story</a>
-+            <a class="cta-btn btn-secondary" href="#">Become a Partner</a>
-+          </div>
-+        </div>
-+      </section>
-+
-+      <section class="journey" aria-label="How our impact works">
-+        <div class="journey-panel">
-+          <h2>How the Impact Journey Works</h2>
-+          <ol class="journey-track">
-+            <li>
-+              <span class="step-badge one">1</span>
-+              <div>
-+                <strong>Identify Local Challenges</strong>
-+                <p>Community partners bring real needs to the table, from education gaps to wellness support.</p>
-+              </div>
-+            </li>
-+            <li>
-+              <span class="step-badge two">2</span>
-+              <div>
-+                <strong>Activate Athlete Leaders</strong>
-+                <p>Athletes are trained to mentor, facilitate workshops, and model consistent accountability.</p>
-+              </div>
-+            </li>
-+            <li>
-+              <span class="step-badge three">3</span>
-+              <div>
-+                <strong>Deliver Hands-On Programs</strong>
-+                <p>Interactive sessions combine sports, life skills, and career readiness in safe environments.</p>
-+              </div>
-+            </li>
-+            <li>
-+              <span class="step-badge four">4</span>
-+              <div>
-+                <strong>Measure + Expand What Works</strong>
-+                <p>Outcomes are tracked with schools and families so successful models can grow to new cities.</p>
-+              </div>
-+            </li>
-+          </ol>
-+        </div>
-+      </section>
-+    </main>
-+  </body>
-+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Answers Through Athletes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f8f4ee;
+        --ink: #1f2937;
+        --muted: #5b6470;
+        --primary: #364fc7;
+        --primary-deep: #2b3fa5;
+        --teal: #0f766e;
+        --gold: #f59e0b;
+        --coral: #ef4444;
+        --card: rgba(255, 255, 255, 0.85);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top left, #fef3c7 0%, #fce7f3 26%, #e0f2fe 55%, var(--bg) 100%);
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background: rgba(255, 255, 255, 0.93);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      }
+
+      .container {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 86px;
+        gap: 2rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .logo {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 13px;
+        border: 2px solid rgba(54, 79, 199, 0.2);
+        background: #fff;
+        padding: 4px;
+      }
+
+      .brand-text {
+        line-height: 1;
+      }
+
+      .brand-text strong {
+        display: block;
+        font-size: 1.08rem;
+      }
+
+      .brand-text span {
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.3rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+
+      .cta-btn {
+        text-decoration: none;
+        padding: 0.65rem 1.2rem;
+        border-radius: 999px;
+        font-weight: 800;
+        background: var(--primary);
+        color: white;
+        border: 1px solid transparent;
+        transition: background 0.25s ease;
+      }
+
+      .cta-btn:hover {
+        background: var(--primary-deep);
+      }
+
+      .hero {
+        margin: 2rem auto 1.5rem;
+        border-radius: 30px;
+        overflow: hidden;
+        position: relative;
+        min-height: 72vh;
+        display: grid;
+        align-items: center;
+        color: white;
+        box-shadow: 0 28px 65px rgba(15, 23, 42, 0.2);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, rgba(31, 41, 55, 0.84), rgba(54, 79, 199, 0.67), rgba(15, 118, 110, 0.62)),
+          url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80")
+            center/cover;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        padding: clamp(2rem, 6vw, 5rem);
+        max-width: 760px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        background: rgba(15, 118, 110, 0.25);
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5.4vw, 4.2rem);
+        line-height: 1.04;
+        margin: 0;
+        letter-spacing: -0.03em;
+      }
+
+      .hero p {
+        margin-top: 1.2rem;
+        font-size: clamp(1rem, 1.8vw, 1.24rem);
+        line-height: 1.6;
+        color: #eef2ff;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1.6rem;
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.46);
+      }
+
+      .journey {
+        margin: -2rem auto 4rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .journey-panel {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 251, 235, 0.87));
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 24px;
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      }
+
+      .journey-panel h2 {
+        margin: 0 0 1rem;
+        color: var(--primary);
+      }
+
+      .journey-track {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .journey-track li {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.8rem;
+        align-items: start;
+        background: var(--card);
+        border-radius: 14px;
+        padding: 0.9rem 1rem;
+        border: 1px solid rgba(203, 213, 225, 0.7);
+      }
+
+      .step-badge {
+        display: inline-grid;
+        place-items: center;
+        min-width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        color: white;
+        font-weight: 800;
+        font-size: 0.88rem;
+      }
+
+      .step-badge.one {
+        background: var(--primary);
+      }
+
+      .step-badge.two {
+        background: var(--teal);
+      }
+
+      .step-badge.three {
+        background: var(--gold);
+      }
+
+      .step-badge.four {
+        background: var(--coral);
+      }
+
+      .journey-track strong {
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+
+      .journey-track p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      @media (max-width: 900px) {
+        .nav {
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 0.8rem 0;
+        }
+
+        .brand {
+          justify-content: center;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#" aria-label="Answers Through Athletes home">
+          <img class="logo" src="https://your-logo-link-goes-here.png" alt="Answers Through Athletes logo" />
+          <div class="brand-text">
+            <strong>Answers Through Athletes</strong>
+            <span>Empower. Educate. Elevate.</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#">Who We Are</a>
+          <a href="#">Programs</a>
+          <a href="#">Partners</a>
+          <a href="#">Impact</a>
+          <a href="#">Get Involved</a>
+        </nav>
+
+        <a class="cta-btn" href="#">Donate</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" aria-label="Hero section">
+        <div class="hero-content">
+          <div class="eyebrow">Driven by athletes • Built for communities</div>
+          <h1>Where Athletes and Real-World Answers Come Together</h1>
+          <p>
+            Answers Through Athletes connects student-athletes, professionals, and local leaders to solve
+            meaningful community challenges through mentorship, service, and action.
+          </p>
+          <div class="hero-actions">
+            <a class="cta-btn" href="#">Our Story</a>
+            <a class="cta-btn btn-secondary" href="#">Become a Partner</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey" aria-label="How our impact works">
+        <div class="journey-panel">
+          <h2>How the Impact Journey Works</h2>
+          <ol class="journey-track">
+            <li>
+              <span class="step-badge one">1</span>
+              <div>
+                <strong>Identify Local Challenges</strong>
+                <p>Community partners bring real needs to the table, from education gaps to wellness support.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-badge two">2</span>
+              <div>
+                <strong>Activate Athlete Leaders</strong>
+                <p>Athletes are trained to mentor, facilitate workshops, and model consistent accountability.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-badge three">3</span>
+              <div>
+                <strong>Deliver Hands-On Programs</strong>
+                <p>Interactive sessions combine sports, life skills, and career readiness in safe environments.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-badge four">4</span>
+              <div>
+                <strong>Measure + Expand What Works</strong>
+                <p>Outcomes are tracked with schools and families so successful models can grow to new cities.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
