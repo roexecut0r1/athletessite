@@ -13,12 +13,12 @@
     />
     <style>
       :root {
-        --bg: #f8f4ee;
+        --bg: #faf8f6;
         --ink: #1f2937;
-        --muted: #5b6470;
-        --primary: #364fc7;
-        --primary-deep: #2b3fa5;
-        --teal: #0f766e;
+        --muted: #9a7c4a;
+        --primary: #7c3aed;
+        --primary-deep: #6d28d9;
+        --teal: #06b6d4;
         --card: rgba(255, 255, 255, 0.9);
       }
 
@@ -30,7 +30,7 @@
         margin: 0;
         font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
         color: var(--ink);
-        background: radial-gradient(circle at top left, #fef3c7 0%, #fce7f3 26%, #e0f2fe 55%, var(--bg) 100%);
+        background: linear-gradient(135deg, #faf8f6 0%, #f5f1f9 100%);
       }
 
       .site-header {
@@ -121,7 +121,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(120deg, rgba(31, 41, 55, 0.84), rgba(54, 79, 199, 0.67), rgba(15, 118, 110, 0.62)),
+        background: linear-gradient(120deg, rgba(31, 41, 55, 0.8), rgba(124, 58, 237, 0.7), rgba(6, 182, 212, 0.6)),
           url("https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1800&q=80")
             center/cover;
       }
@@ -139,7 +139,7 @@
         padding: 0.35rem 0.8rem;
         border-radius: 999px;
         border: 1px solid rgba(255, 255, 255, 0.4);
-        background: rgba(15, 118, 110, 0.25);
+        background: rgba(124, 58, 237, 0.3);
         font-size: 0.85rem;
         margin-bottom: 1rem;
       }
@@ -187,6 +187,30 @@
           width: 100%;
         }
       }
+
+      .site-footer {
+        background: linear-gradient(135deg, #f5f1f9 0%, #faf8f6 100%);
+        border-top: 1px solid rgba(148, 163, 184, 0.2);
+        padding: 2rem 0;
+        margin-top: 4rem;
+      }
+
+      .footer-content {
+        text-align: center;
+      }
+
+      .footer-content p {
+        margin: 0.5rem 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .footer-content h3 {
+        margin: 0.5rem 0;
+        color: var(--primary);
+        font-size: 1.05rem;
+      }
     </style>
   </head>
   <body>
@@ -203,12 +227,12 @@
         <nav class="nav-links" aria-label="Main navigation">
           <a href="index.html">Home Page</a>
           <a href="our-story.html">Our Story</a>
-          <a href="#">Partners</a>
+          
           <a href="#">Impact</a>
           <a href="#">Get Involved</a>
         </nav>
 
-        <a class="cta-btn" href="#">Donate</a>
+        
       </div>
     </header>
 
@@ -243,5 +267,13 @@
         </article>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <h3>ANSWERS THROUGH ATHLETES, INC.</h3>
+        <p>Florida Not For Profit Corporation</p>
+        <p>Document Number: N25000006726</p>
+      </div>
+    </footer>
   </body>
 </html>
