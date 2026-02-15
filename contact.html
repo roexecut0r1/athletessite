@@ -199,6 +199,47 @@
         margin: 0.3rem 0;
         color: var(--muted);
       }
+      
+      .image-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1.2rem;
+        align-items: start;
+      }
+
+      .image-card {
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--card);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+        text-align: center;
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .image-card figcaption {
+        padding: 0.6rem 0.8rem;
+        font-weight: 700;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 640px) {
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .image-card img {
+          height: 160px;
+        }
+      }
 
       .contact-link {
         display: inline-block;
@@ -292,6 +333,18 @@
             <p>• Donate to help us support athletes</p>
             <p>• Partner with us through your business or organization</p>
             <p>• Share our mission with your network</p>
+          </div>
+
+          <div class="image-grid" aria-label="Gallery">
+            <figure class="image-card">
+              <img src="img2.jpeg" alt="" />
+              <figcaption></figcaption>
+            </figure>
+
+            <figure class="image-card">
+              <img src="img1.jpg" alt="" />
+              <figcaption></figcaption>
+            </figure>
           </div>
         </div>
       </section>
