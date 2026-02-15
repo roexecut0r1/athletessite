@@ -185,13 +185,13 @@
         border: 1px solid rgba(255, 255, 255, 0.46);
       }
 
-      .journey {
+      .gallery {
         margin: -2rem auto 4rem;
         position: relative;
         z-index: 2;
       }
 
-      .journey-panel {
+      .gallery-panel {
         background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 251, 235, 0.87));
         border: 1px solid rgba(148, 163, 184, 0.22);
         border-radius: 24px;
@@ -199,65 +199,94 @@
         box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
       }
 
-      .journey-panel h2 {
-        margin: 0 0 1rem;
+      .gallery-panel h2 {
+        margin: 0 0 1.5rem;
         color: var(--primary);
       }
 
-      .journey-track {
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
         list-style: none;
         margin: 0;
         padding: 0;
-        display: grid;
-        gap: 0.85rem;
       }
 
-      .journey-track li {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0.8rem;
-        align-items: start;
-        background: var(--card);
-        border-radius: 14px;
-        padding: 0.9rem 1rem;
-        border: 1px solid rgba(203, 213, 225, 0.7);
+      .gallery-item {
+        cursor: pointer;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
       }
 
-      .step-badge {
-        display: inline-grid;
-        place-items: center;
-        min-width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        color: white;
-        font-weight: 800;
-        font-size: 0.88rem;
+      .gallery-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
       }
 
-      .step-badge.one {
-        background: var(--primary);
-      }
-
-      .step-badge.two {
-        background: var(--teal);
-      }
-
-      .step-badge.three {
-        background: var(--gold);
-      }
-
-      .step-badge.four {
-        background: var(--coral);
-      }
-
-      .journey-track strong {
+      .gallery-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
         display: block;
-        margin-bottom: 0.2rem;
       }
 
-      .journey-track p {
-        margin: 0;
-        color: var(--muted);
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        max-width: 90%;
+        max-height: 90vh;
+        position: relative;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+      }
+
+      .modal img {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-height: 80vh;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 1.8rem;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        background: rgba(0, 0, 0, 0.6);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+      }
+
+      .modal-close:hover {
+        background: rgba(0, 0, 0, 0.9);
       }
 
       @media (max-width: 900px) {
@@ -336,41 +365,38 @@
         </div>
       </section>
 
-      <section class="journey" aria-label="How our impact works">
-        <div class="journey-panel">
-          <h2>How the Impact Journey Works</h2>
-          <ol class="journey-track">
-            <li>
-              <span class="step-badge one">1</span>
-              <div>
-                <strong>whatever step 1 is (we can remove steps if there are too many)</strong>
-                <p>discription</p>
-              </div>
+      <section class="gallery" aria-label="Photo gallery">
+        <div class="gallery-panel">
+          <h2>Gallery</h2>
+          <ul class="gallery-grid">
+            <li class="gallery-item" onclick="openModal(this.querySelector('img').src)">
+              <img src="pic1.jpeg" alt="Gallery image 1">
             </li>
-            <li>
-              <span class="step-badge two">2</span>
-              <div>
-                <strong>whatever step 2 is</strong>
-                <p>discription</p>
-              </div>
+            <li class="gallery-item" onclick="openModal(this.querySelector('img').src)">
+              <img src="pic2.jpeg" alt="Gallery image 2">
             </li>
-            <li>
-              <span class="step-badge three">3</span>
-              <div>
-                <strong>whatever step 3 is</strong>
-                <p>discription</p>
-              </div>
+            <li class="gallery-item" onclick="openModal(this.querySelector('img').src)">
+              <img src="pic3.jpeg" alt="Gallery image 3">
             </li>
-            <li>
-              <span class="step-badge four">4</span>
-              <div>
-                <strong>whatever step 4 is</strong>
-                <p>discription</p>
-              </div>
+            <li class="gallery-item" onclick="openModal(this.querySelector('img').src)">
+              <img src="pic4.jpeg" alt="Gallery image 4">
             </li>
-          </ol>
+            <li class="gallery-item" onclick="openModal(this.querySelector('img').src)">
+              <img src="pic5.jpeg" alt="Gallery image 5">
+            </li>
+            <li class="gallery-item" onclick="openModal(this.querySelector('img').src)">
+              <img src="pic6.jpeg" alt="Gallery image 6">
+            </li>
+          </ul>
         </div>
       </section>
+
+      <div id="imageModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+          <img id="modalImage" src="" alt="Full size gallery image">
+        </div>
+      </div>
     </main>
 
     <footer class="site-footer">
@@ -380,5 +406,26 @@
         <p>Document Number: N25000006726</p>
       </div>
     </footer>
+
+    <script>
+      function openModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = src;
+        modal.classList.add('show');
+      }
+
+      function closeModal(event) {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('show');
+      }
+
+      // Close modal when pressing Escape key
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+    </script>
   </body>
 </html>
