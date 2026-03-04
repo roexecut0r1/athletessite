@@ -1,0 +1,1404 @@
+@supports (-webkit-touch-callout: none) {
+  body, html{overflow: auto}
+}
+html{ /* Default scroll of Firefox */
+	scrollbar-color:rgba(0,0,0,0.1) transparent;
+}
+/* Default scroll of Chrome */
+::-webkit-scrollbar {
+	background-color:transparent}
+::-webkit-scrollbar-thumb {
+	background:rgba(0,0,0,0.2);
+	border-radius: 0
+}
+.no-seletc-text *{  
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+   user-select: none; /* Standard syntax */
+}
+.controls{
+    display: inline-block;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    position: relative; 
+    vertical-align: middle
+}
+.controls span {
+  font:Bold 12px/20px sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-bottom: 3px;
+  min-width: 18px;
+  height: 15px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #444;
+  border-top: 1px solid #cccccc;
+  box-shadow: 0px 2px 0px 1px #cccccc;
+  padding: 3px;
+}
+.controls section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  grid-gap: 6px;
+  width: calc(22px * 3);
+  height: calc(22px * 2);
+}
+.controls.arrow-key-single section{
+  width:26px;
+  height:22px;
+}
+.controls section ~ .controls section {
+  margin-top: 50px;
+}
+
+.controls section > span:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.controls section > span:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.controls section > span:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.controls section > span:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.controls .mouse{ border: 1px solid rgba(0,0,0,0.0); border-radius: 2em; width: 20px; height: 30px; margin:5px 1px 5px 10px; display: inline-block;overflow: hidden;position: relative;background-color: rgba(255, 255, 255, 1); vertical-align: middle; box-shadow: 0px 1px 0px 1px #cccccc;}
+.controls .mouse .left{border: 1px solid rgba(0,0,0,0.5); border-left: 0; border-top: 0; width: 8px; height: 16px; float: left;}
+.controls .mouse .wheel{height: 10px;width: 6px;border: 0 solid #AAA;position: absolute; transform: translateX(-50%); left:50%;border-radius: 2em;top:2px; background-color: red;}
+.controls .mouse .right{border: 1px solid rgba(0,0,0,0.5); border-right: 0; border-top: 0; width: 8px; height: 16px; float: right;}
+.controls .mouse .actived{background-color: red;}
+
+.arrow-key-single, .only-mouse{
+  vertical-align:baseline;
+}
+.only-mouse{margin-bottom:0;}
+
+.only-keyboard{
+  vertical-align:baseline;
+  margin-left: 3px;
+  margin-right: 2px;
+}
+
+/************************************
+*************************************
+***** VIRTUAL KEYBOARD ON MOBILE ****
+*************************************
+*************************************/
+
+.virtual-keyboard{position: absolute;display: none; margin:10px;z-index:100;height: auto; width: auto;}
+.virtual-keyboard-right{right: 10px; bottom: 10px; }
+.virtual-keyboard-left{left: 10px; bottom: 10px; max-width: 300px; }
+
+.virtual-keyboard .controls{margin: 0}
+.virtual-keyboard .controls span{ /* Normal keys */
+  min-width: 40px;
+  min-height: 40px;
+  cursor: pointer;
+  background: rgba(255,0,0,0.5);
+  color:white;
+  border:1px solid rgba(255,0,0,0.8);
+  box-shadow:0 0 3px rgba(255, 0, 0, 0.3);
+  font:bold 20px/1 Arial;
+  text-align: center;
+  margin: 5px;
+  padding:0;
+  box-sizing: border-box;
+  border-radius:3px;
+  transition: all 0.5s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fully arrow keys */
+.virtual-keyboard .controls section span{border-radius:50%;width:60px;height:60px;background: rgba(255,0,0,0.2);border:1px solid rgba(255,0,0,0.3);box-shadow: none}
+.virtual-keyboard .controls section{
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  width: calc(55px * 3);
+  height: calc(55px * 3);
+  margin-left: -8px;
+}
+
+.virtual-keyboard .controls section > span:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+  margin-bottom: -15px;
+}
+
+.virtual-keyboard .controls section > span:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+  margin-right: -15px;
+}
+
+.virtual-keyboard .controls section > span:nth-child(3) {
+  grid-column: 2;
+  grid-row: 3;
+  margin-top: -15px;
+}
+
+.virtual-keyboard .controls section > span:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+  margin-left: -15px;
+}
+
+.virtual-keyboard .three-keys section{
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  width: calc(55px * 3);
+  height: calc(55px * 2);
+  margin-left: -8px;
+}
+
+/* Part of arrow keys */
+.virtual-keyboard .arrow-key-single span{
+  width: 65px!important;
+  height:65px!important;
+  -webkit-border-radius: 50%; 
+  -moz-border-radius: 50%; 
+  border-radius:50%;
+  margin:0;
+}
+.virtual-keyboard .arrow-key-single section{
+  width: calc(65px);
+  height: calc(65px);
+  margin:5px;
+} 
+.virtual-keyboard span[data-key="Space"], 
+.virtual-keyboard span[data-key="Enter"], 
+.virtual-keyboard span[data-key="ShiftLeft"],
+.virtual-keyboard span[data-key="ControlLeft"],
+.virtual-keyboard span[data-key="CapsLock"],
+.virtual-keyboard span[data-key="PageUp"],
+.virtual-keyboard span[data-key="PageDown"],
+.virtual-keyboard span[data-key="Home"]{width:100px;font-size: 16px;}
+.virtual-keyboard .moving{font:20px/20px Arial;color:white;background-color: black; border-radius: 3px;padding: 5px; width:20px;height: 20px;cursor: move; margin: 5px auto;opacity: 0.5;position: absolute;top:-50px;text-align: center;box-shadow:0 0 2px 1px rgba(255, 255, 255, 0.3);}
+.virtual-keyboard .moving:hover{opacity: 1;}
+.virtual-keyboard-left .moving{right:0;left:auto;}
+.virtual-keyboard-right .moving{left:0;right:auto;}
+
+.virtual-one-wide{width: 40px;height: 40px;}
+.virtual-two-wide{width: 100px;height: 100px;}
+.virtual-third-wide{width: 150px;height:150px;}
+
+.virtual-keyboard .virtual-keyboard-actived{
+  box-shadow:0 0 30px 10px rgba(55, 255, 0, 0.3)!important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8)!important;
+  border-color:red!important;
+  background-color: rgba(255,0,0,0.3)!important;
+  transform:scale(1.5, 1.5);
+}
+.virtual-keyboard .virtual-keyboard-actived.bg-changed{
+  box-shadow:0 0 30px 10px rgba(0, 150, 255, 0.3)!important;
+  text-shadow: 0 0 10px rgba(0, 150, 255, 0.6)!important;
+  border-color:rgba(0, 150, 255, 1)!important;
+  background-color:rgba(0, 150, 255, 0.3)!important;
+}
+.virtual-keyboard .virtual-keyboard-actived[data-title]::before{
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.border.border:not(.titlehidden).virtual-keyboard-actived, 
+.vtkb-border.border:not(.titlehidden).virtual-keyboard-actived{
+ border-color:transparent!important;
+}
+
+.border.border:not(.titlehidden).virtual-keyboard-actived::after,
+.vtkb-border.border:not(.titlehidden).virtual-keyboard-actived::after{
+  border: 2px solid transparent!important;
+  border-top: 2px solid white!important;
+  border-bottom: 2px solid white!important;
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@supports (-webkit-touch-callout: none) {  /* Apply on iOS */
+  @media only screen and (hover: none) and (pointer: coarse) and (orientation:portrait) {
+    .virtual-keyboard-right{right: 30%; bottom: 30%; }
+    .virtual-keyboard-left{left: 30%; bottom: 30%; }
+  } 
+}
+
+/*
+*****************************************
+*****************************************
+****         Button Icon            *****
+*****************************************
+*****************************************
+*/
+
+.vtkb-action-button{
+  border-color: rgba(255, 0, 0, 0.5)!important;
+  color: transparent!important;
+  text-indent: -99999px;
+  /*box-shadow: 0 0 35px rgba(255, 0, 0, 0.5)!important;*/
+}
+.vtkb-action-button.bg-changed{
+  border-color:rgba(0, 150, 255, 1)!important;
+  background-color:rgba(0, 150, 255, 0.8)!important;
+}
+
+
+.border:not(.titlehidden), .vtkb-border:not(.titlehidden){position:relative;border-color:transparent!important;}
+
+.border:not(.titlehidden)::after,
+.vtkb-border:not(.titlehidden)::after{
+  content:"";
+  border: 1px solid transparent!important;
+  border-left: 1px solid rgba(255, 255, 255, 0.6)!important;
+  border-right: 1px solid rgba(255, 255, 255, 0.6)!important;
+  position:absolute;
+  left:-1px;top:-1px;right:-1px;bottom:-1px;
+  border-radius:50%;
+  transition: all 0.5s ease;
+}
+
+/***********************
+*******TITLE************
+************************/
+span[data-title]{position: relative}
+span[data-title]::before{
+  content: attr(data-title);
+  position: absolute;
+  left: 50%;
+  top:-16px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 2em;
+  transform: translateX(-50%);
+  font:10px Arial;
+  z-index: 99;
+  padding: 1px 10px;
+  text-align: center;
+  white-space: nowrap;
+  color:white!important;
+  text-indent: 0;
+}
+span[data-title].titlehidden::before{
+  display: none;
+}
+span[data-title].titlehidden:hover:active::before{
+  display: block;
+}
+
+span[data-title].delaytitle::before, span[data-title].vtkb-delaytitle::before{
+  display: none;
+}
+span[data-title].delaytitle:hover:active::before, span[data-title].vtkb-delaytitle:hover:active::before{
+  display: block;
+}
+
+.vtkb-grab{
+  background: url(../images/grab.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-grab-2{
+  background: url(../images/grab-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-grab-3{
+  background: url(../images/grab-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-grab-4{
+  background: url(../images/grab-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-grab-5{
+  background: url(../images/grab-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-shooting{
+  background: url(../images/shooting.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-shooting-2{
+  background: url(../images/shooting-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-bullet{
+  background: url(../images/bullet.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important;  
+}
+.vtkb-shooting-3{
+  background: url(../images/shooting-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-shooting-4{
+  background: url(../images/shooting-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-shooting-5{
+  background: url(../images/shooting-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-shooting-6{
+  background: url(../images/shooting-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-soccer{
+  background: url(../images/soccer.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-soccer-2{
+  background: url(../images/soccer-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-soccer-3{
+  background: url(../images/soccer-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-soccer-4{
+  background: url(../images/soccer-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-soccer-5{
+  background: url(../images/soccer-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-defense{
+  background: url(../images/defense.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-defense-2{
+  background: url(../images/defense-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-defense-3{
+  background: url(../images/defense-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-defense-4{
+  background: url(../images/defense-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-defense-5{
+  background: url(../images/defense-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-bomb{
+  background: url(../images/bomb.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-bomb-2{
+  background: url(../images/bomb-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-bomb-3{
+  background: url(../images/bomb-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-bomb-4{
+  background: url(../images/bomb-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-bomb-5{
+  background: url(../images/bomb-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-tnt{
+  background: url(../images/tnt.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-tnt-2{
+  background: url(../images/tnt-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-tnt-3{
+  background: url(../images/tnt-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-tnt-4{
+  background: url(../images/tnt-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-tnt-5{
+  background: url(../images/tnt-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-punch{
+  background: url(../images/punch.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-punch-2{
+  background: url(../images/punch-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-punch-3{
+  background: url(../images/punch-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-punch-4{
+  background: url(../images/punch-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-punch-5{
+  background: url(../images/punch-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-skill{
+  background: url(../images/skill.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-2{
+  background: url(../images/skill-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-3{
+  background: url(../images/skill-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-4{
+  background: url(../images/skill-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-5{
+  background: url(../images/skill-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-6{
+  background: url(../images/skill-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-7{
+  background: url(../images/skill-7.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-8{
+  background: url(../images/skill-8.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-9{
+  background: url(../images/skill-9.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-10{
+  background: url(../images/skill-10.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-skill-11{
+  background: url(../images/skill-11.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-kick{
+  background: url(../images/kick.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-2{
+  background: url(../images/kick-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-3{
+  background: url(../images/kick-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-4{
+  background: url(../images/kick-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-5{
+  background: url(../images/kick-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-6{
+  background: url(../images/kick-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-7{
+  background: url(../images/kick-7.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-8{
+  background: url(../images/kick-8.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-9{
+  background: url(../images/kick-9.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-10{
+  background: url(../images/kick-10.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-11{
+  background: url(../images/kick-11.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-kick-12{
+  background: url(../images/kick-12.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-boost{
+  background: url(../images/boost.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-boost-2{
+  background: url(../images/boost-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-boost-3{
+  background: url(../images/boost-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-boost-4{
+  background: url(../images/boost-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-boost-5{
+  background: url(../images/boost-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-jumping{
+  background: url(../images/jumping.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-2{
+  background: url(../images/jumping-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-3{
+  background: url(../images/jumping-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-4{
+  background: url(../images/jumping-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-5{
+  background: url(../images/jumping-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-6{
+  background: url(../images/jumping-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-7{
+  background: url(../images/jumping-7.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-8{
+  background: url(../images/jumping-8.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-9{
+  background: url(../images/jumping-9.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-10{
+  background: url(../images/jumping-10.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-11{
+  background: url(../images/jumping-11.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-12{
+  background: url(../images/jumping-12.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-13{
+  background: url(../images/jumping-13.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-14{
+  background: url(../images/jumping-14.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-15{
+  background: url(../images/jumping-15.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-jumping-16{
+  background: url(../images/jumping-16.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-sword{
+  background: url(../images/sword.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-sword-2{
+  background: url(../images/sword-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-sword-3{
+  background: url(../images/sword-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-sword-4{
+  background: url(../images/sword-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-sword-5{
+  background: url(../images/sword-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-gun{
+  background: url(../images/gun.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-gun-2{
+  background: url(../images/gun-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-gun-3{
+  background: url(../images/gun-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-gun-4{
+  background: url(../images/gun-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-gun-5{
+  background: url(../images/gun-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-knife{
+  background: url(../images/knife.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-knife-2{
+  background: url(../images/knife-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-knife-3{
+  background: url(../images/knife-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-knife-4{
+  background: url(../images/knife-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-knife-5{
+  background: url(../images/knife-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-pass{
+  background: url(../images/pass.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-pass-2{
+  background: url(../images/pass-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-pass-3{
+  background: url(../images/pass-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-pass-4{
+  background: url(../images/pass-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-pass-4{
+  background: url(../images/pass-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-weapon{
+  background: url(../images/weapon.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-weapon-2{
+  background: url(../images/weapon-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-weapon-3{
+  background: url(../images/weapon-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-weapon-4{
+  background: url(../images/weapon-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-weapon-5{
+  background: url(../images/weapon-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-slash{
+  background: url(../images/slash.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-slash-2{
+  background: url(../images/slash-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-slash-3{
+  background: url(../images/slash-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-slash-4{
+  background: url(../images/slash-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-slash-5{
+  background: url(../images/slash-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-archery{
+  background: url(../images/archery.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-archery-2{
+  background: url(../images/archery-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-archery-3{
+  background: url(../images/archery-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-archery-4{
+  background: url(../images/archery-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-archery-5{
+  background: url(../images/archery-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-archery-6{
+  background: url(../images/archery-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-skin{
+  background: url(../images/skin.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-reload{
+  background: url(../images/reload.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-transform{
+  background: url(../images/transform.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-monster{
+  background: url(../images/monster.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-racket{
+  background: url(../images/racket.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-2{
+  background: url(../images/racket-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-3{
+  background: url(../images/racket-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-4{
+  background: url(../images/racket-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-5{
+  background: url(../images/racket-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-6{
+  background: url(../images/racket-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-7{
+  background: url(../images/racket-7.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-8{
+  background: url(../images/racket-8.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-9{
+  background: url(../images/racket-9.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-racket-10{
+  background: url(../images/racket-10.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-crouch{
+  background: url(../images/crouch.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-crouch-2{
+  background: url(../images/crouch-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-crouch-3{
+  background: url(../images/crouch-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-crouch-4{
+  background: url(../images/crouch-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-crouch-5{
+  background: url(../images/crouch-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+.vtkb-throw{
+  background: url(../images/throw.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-2{
+  background: url(../images/throw-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-3{
+  background: url(../images/throw-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-4{
+  background: url(../images/throw-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-5{
+  background: url(../images/throw-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-6{
+  background: url(../images/throw-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-7{
+  background: url(../images/throw-7.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-throw-8{
+  background: url(../images/throw-8.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+
+
+.vtkb-speed{
+  background: url(../images/speed.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-2{
+  background: url(../images/speed-2.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-3{
+  background: url(../images/speed-3.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-4{
+  background: url(../images/speed-4.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-5{
+  background: url(../images/speed-5.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-6{
+  background: url(../images/speed-6.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-7{
+  background: url(../images/speed-7.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-8{
+  background: url(../images/speed-8.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-9{
+  background: url(../images/speed-9.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-10{
+  background: url(../images/speed-10.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-11{
+  background: url(../images/speed-11.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-12{
+  background: url(../images/speed-12.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-13{
+  background: url(../images/speed-13.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-14{
+  background: url(../images/speed-14.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-15{
+  background: url(../images/speed-15.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important; 
+}
+.vtkb-speed-16{
+  background: url(../images/speed-16.png) no-repeat center center rgba(255, 0, 0, 0.3)!important;
+  background-size: 24px auto!important;
+}
+
+.wide-size:not(.titlehidden), .medium-size:not(.titlehidden){
+  background-size: 33px auto!important;
+}
+.large-size:not(.titlehidden){
+  background-size: 43px auto!important;
+}
+.extra-size:not(.titlehidden), .max-size:not(.titlehidden){
+  background-size: 50px auto!important;
+}
+
+.setting-box{position: absolute; top: 10px; right: 10px;z-index:1000;width: 106px;}
+.multi-player-mode{
+  position: relative;
+  background-color: white;
+  border-radius: 2em;
+  height: 22px;
+  width: 40px;
+  cursor: pointer;
+  font:12px/22px Arial;
+  color:#111;
+  text-align: center;
+  padding: 0 5px;
+  -webkit-tap-highlight-color: transparent;
+  display: none;
+  float: right;
+  margin-right: 10px;
+}
+.multi-player-mode button{
+  background-color: red;
+  border-radius: 2em;
+  position: absolute;
+  left: -2px; top: -2px;
+  height: 26px;
+  width: 26px;
+  text-align: center;
+  font:Bold 12px/22px Arial;
+  padding: 0;
+  color:white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-right-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color:rgba(0, 0, 0, 0.2);
+  box-shadow: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.multi-player-mode button[data-mode="2P"]{
+  left: auto;
+  right:0px;
+  background: rgba(0, 150, 255, 1);
+}
+.more-setting{
+  float: right;
+  z-index: 99999999;
+  display: none;
+}
+.setting-box-content{
+  position: relative;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.more-setting .icon-button{
+  border:1px solid rgba(255, 255, 255, 0.2); 
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font:18px/24px Arial;
+  padding: 0;
+  margin: 0;
+  background: red;
+  color: white;
+  cursor: pointer;
+  float: right;
+}
+.more-setting .more-setting-sub{
+  position: absolute;
+  z-index: 99999999;
+  right: 0;
+  top:0;
+  display: none;
+}
+
+/*.more-setting:hover .more-setting-sub{
+  display: block;
+}*/
+.more-setting-sub .content{
+  position: relative;
+  background: red;
+  min-width: 120px;
+  margin: 35px 0 0 0;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+.more-setting-sub .content::before{
+  content: "";
+  border-color: red;
+  border-style: solid;
+  border-left-width: 7px;
+  border-top-width: 7px;
+  border-right-width: 7px;
+  border-bottom-width: 7px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  position: absolute;
+  right: 5px;
+  top: -13px
+}
+.more-setting-sub .content button.sub-list{
+  display: block;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px rgba(255, 255, 255, 0.2);
+  width: 100%;
+  font:12px/36px Arial;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+  text-align:left;
+  padding: 2px 10px;
+}
+.more-setting-sub .content button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+.more-setting-sub .content button.sub-list:last-child{
+  border: 0;
+  box-shadow: none;
+  border-radius: 0 0 3px 3px;
+}
+.embed-popup{
+  position: absolute;
+  left:0;top:0; right: 0;
+  bottom:0;
+  border-radius: 0 0 5px 5px;
+  background-color:gray;
+  background-image: linear-gradient(to right top, #370507, #610514, #8d041b, #bc061e, #eb121c);
+  z-index: 999999999;
+  padding: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  display: none;
+}
+.popup-header{
+  height: 40px;
+  background: red;
+  margin: 0
+}
+.popup-header .title{
+  margin: 0;
+  font:20px/40px Arial;
+  color:white;
+  padding: 0 10px 0 68px;
+  float: left;
+}
+.popup-header .close-button{
+  border-radius: 3px; 
+  border: 0;
+  background: rgba(0, 150, 255, 0.1);
+  width: 26px;
+  height: 26px;
+  margin:7px 16px 7px 7px;
+  padding: 0;
+  float: right;
+  color: white;
+  font:16px/1 Arial;
+  cursor: pointer;
+  outline: none;
+}
+.popup-content{
+  margin: 0;
+  padding: 10px;
+}
+.content-title{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow:0 1px rgba(255, 255, 255, 0.1);
+  margin: 5px;
+  font:Bolder 16px/26px Arial;
+  color: white;
+}
+.feature-box{
+  margin: 5px;
+  text-align: center;
+}
+
+.feature-box .ruffle-quality, .feature-box .ruffle-renderer, .feature-box .general-emulator{
+	display: inline-block;
+	vertical-align: top;
+	background: #4C0707;
+	border: 0;
+	border-radius: 5px;
+	padding: 0px 20px;
+	margin: 5px 0;
+	color: white;
+	font:12px/26px Arial;
+	position: relative;
+  min-width: 100px;  
+  cursor: pointer;
+  /*clip-path: polygon(0 0, 5px 0, 6px 2px, calc(100% - 6px) 2px, calc(100% - 5px) 0, 100% 0, 100% 100%, calc(100% - 5px) 100%, calc(100% - 6px) calc(100% - 2px), 6px calc(100% - 2px), 5px 100%, 0 100%);*/
+}
+
+.feature-box .general-emulator{
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  background-color: gray;
+  margin-left: -12px;
+  border-radius: 0;
+}
+.feature-box .general-emulator:first-child{
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 8px 100%, 0 50%);
+  margin-left: 12px;
+}
+.feature-box .general-emulator:last-child{
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+}
+.quality-default, .renderer-default, .emulator-default{
+	background-color: #f9dd07!important;
+	color: red !important;
+	cursor: not-allowed!important;
+}
+.emulator-default{
+  background-color: #333!important;
+	color: white !important;
+}
+
+.content-title-2{
+	display: inline-block;
+	font:italic 12px/30px Arial;
+	background-color: rgba(255,255,255,0.3);
+	margin: 5px 0;
+	color: white;
+	padding: 0px 16px 0 10px;
+	border-radius: 3px;
+	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+}
+.feature-list{font:12px/20px Arial;color:white;display: block;}
+.popup-footer{
+  height: 38px;
+  background: rgba(0, 0, 0, 0.1);
+  clear: left;
+  border-radius: 5px;
+}
+.save-setting-button{
+  border: 0 solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  float: right;;
+  margin: 6px 3px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color:white;
+  height: 26px;
+  padding: 0px 10px;
+  font:12px/26px Arial;
+}
+.show-one-half{
+  width: 48%;
+  float: left;
+  box-sizing: border-box;
+}
+@media (max-width: 601px) {
+  .show-one-half{
+    width: 100%;
+  }
+}
+.show-one-half + .show-one-half{
+  float: right;
+}
+/* The container */
+.container-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-checkbox input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container-checkbox .checkmark:after {
+  left: 9px;
+  top: 2px;
+  width: 2px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+
+.speaker {
+	height: 30px;
+	width: 30px;
+	position: relative;
+  -webkit-tap-highlight-color: transparent;
+	display:block;
+  float: right;
+  margin: 0 5px 0 0;
+  padding: 0;
+  display: none;
+  cursor: pointer;
+  }
+  .speaker span {
+	display: block;
+	width: 8px;
+	height: 8px;
+	background: red;
+	margin: 7px 0 0 0;
+  float: left;
+  }
+  .speaker span:after {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-color: transparent red transparent transparent;
+	border-width: 10px 14px 10px 15px;
+	left: -15px;
+	top: 1px;
+  }
+  .speaker span:before {
+	transform: rotate(45deg);
+	border-radius: 0 50px 0 0;
+	content: '';
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	border-style: double;
+	border-color: rgb(192, 36, 36);
+	border-width: 7px 7px 0 0;
+	left: 16px;
+	top: 5px;
+	transition: all 0.2s ease-out;
+  }
+  .speaker:hover span:before {
+	transform: scale(0.8) translate(-3px, 0) rotate(42deg);
+  }
+  .speaker.mute span:before {
+    color: rgb(192, 36, 36);
+    font: bold 12px Arial;
+    content: "\2715";
+    width: 10px;
+    height: 10px;
+    right: 0;
+    top:-5px;
+    border-color: transparent;
+    transform: none;
+	  opacity: 1;
+  }
+
+  .playing {
+    box-sizing: border-box;
+    width: 0;
+    height: 20px;
+    border-style: solid;
+    border-width: 10px 0 10px 20px;
+    border-color: transparent transparent transparent red;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    will-change: border-width;
+    transition: all 0.2s ease;
+    float: right;
+    margin-top: 1px;
+    margin-right: 10px;
+    cursor: pointer;
+    display: none;
+  }
+  .playing.paused {
+    border-style: double;
+    border-width: 0px 0 0px 20px;
+  }
+  .playing:hover {
+    border-color: transparent transparent transparent red;
+  }
