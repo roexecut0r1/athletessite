@@ -1,0 +1,228 @@
+.fsg_modal{
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+    z-index: 999999;
+    background-color: #000e24;  
+    background-image: linear-gradient(to right top, #010e22, #011025, #000e24, #011536, #02163f);
+    overflow-y: auto;
+    display: none;
+}
+.fsg_bgr_red{
+    background-color: #5a0202!important;  
+    background-image: linear-gradient(to right top, #0c0000, #140000, #0e0000, #360101, #0e0000)!important;
+}
+.fsg_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fsg_drop_shadow{
+    filter: drop-shadow(0 -2px 15px rgba(5, 5, 185,0.3));
+}
+.fsg_bgr_red .fsg_drop_shadow{
+    filter: drop-shadow(0 -2px 15px rgba(148, 2, 2, 0.3))!important;
+}
+.fsg_panel{
+    margin: 10px;
+    width: 100%;
+    background-image: linear-gradient(to right top, #033279, #02357c, #043179, #043788, #053eaf);
+    clip-path: polygon(10px 20px, 20% 20px, 22% 0, calc(100% - 22%) 0, calc(100% - 20%) 20px, calc(100% - 10px) 20px, 100% 30px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 30px);
+    position: relative;
+    
+}
+@media screen and (width: 601px) {
+    .fsg_panel{width: 100%!important;}
+}
+.fsg_bgr_red .fsg_panel{
+    background-image: linear-gradient(to right top, #770202, #8a0101, #790303, #830202, #a00303)!important;
+}
+.fsg_panel::before{
+    content: "";
+    position: absolute;
+    left:2px; top:1px; right:2px; bottom:1px;
+    clip-path: polygon(10px 20px, 20% 20px, 22% 0, calc(100% - 22%) 0, calc(100% - 20%) 20px, calc(100% - 10px) 20px, 100% 30px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 30px);
+    background-image: linear-gradient(to top, #031125, #03142e, #021838, #021e47, #03214e);
+    z-index: -1;
+}
+.fsg_bgr_red .fsg_panel::before{
+    background-image: linear-gradient(to top, #250303, #2e0303, #380202, #470202, #4e0303)!important;
+}
+.fsg_panel::after{
+    content: "";
+    position: absolute;
+    top:0px;
+    border-top: 2px solid rgb(47, 47, 250);
+    width: 80%;
+    height: 0;
+}
+.fsg_bgr_red .fsg_panel::after{
+    border-top: 2px solid rgb(250, 47, 47)!important;
+}
+.fsg_panel__title{font:Bold 16px/40px Arial;text-transform: uppercase;color: white; text-align: center;position: relative;}
+.fsg_close{
+    position: absolute; 
+    right: 0; top:0;
+    margin: 10px 0 0 0;padding: 0;
+    border: 0;
+    background-color: rgba(235, 57, 125, 0.5);
+    color: white;
+    text-transform: uppercase;
+    font:Bold 12px/40px Arial;
+    text-align: left;
+    padding-left: 30px;
+    width: 60px;
+    height:30px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%);
+    cursor: pointer;
+}
+.fsg_line{width: 100%;position: relative;}
+.fsg_line__content{
+    height: 0; width: 0; border: 6px solid transparent; border-top-color: #0966f3; 
+    margin: 0 auto;
+}
+.fsg_bgr_red .fsg_line__content{border-top-color: #f30909; }
+.fsg_line::before{
+    content: "";
+    height: 0; width: calc(50% - 10px);
+    position: absolute; 
+    top: 0; left: 0;
+    border-bottom: 1px solid transparent;border-image: linear-gradient(45deg, transparent, transparent ,#0556cf ,#0556cf);border-image-slice: 1;}
+.fsg_bgr_red .fsg_line::before{ border-bottom: 1px solid transparent;border-image: linear-gradient(45deg, transparent, transparent , #cf0505 , #cf0505);border-image-slice: 1;}    
+.fsg_line::after{
+    content: "";
+    height: 0; width: calc(50% - 10px); 
+    position: absolute; 
+    top: 0; right: 0;
+    border-bottom: 1px solid transparent;border-image: linear-gradient(45deg, #0556cf, #0556cf, transparent, transparent);border-image-slice: 1;}
+
+.fsg_bgr_red .fsg_line::after{border-bottom: 1px solid transparent;border-image: linear-gradient(45deg, #cf0505, #cf0505, transparent, transparent);border-image-slice: 1;}
+
+.fsg_panel_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fsg_card{
+    position: relative;
+    width:calc(100% - 20px);
+    min-height: 150px;
+    margin: 10px;
+    background-color: #0857ce;
+    clip-path: polygon(10px 0, 20% 0, 22% 6px, calc(100% - 22%) 6px, calc(100% - 20%) 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+    text-align: center;
+    padding: 9px;
+    color: white;
+}
+@media screen and (max-width: 601px) {
+    .fsg_card{width:calc(100% - 20px)!important;}
+    .fsg_panel_content{display: block!important;}
+}
+.fsg_bgr_red .fsg_card{
+    background-color: #ce0808;
+}
+.fsg_card::before{
+    content: "";
+    position: absolute;
+    left:1px; top:1px; right:1px; bottom:1px;
+    background-color: #021f47;
+    clip-path: polygon(10px 0, 20% 0, 22% 7px, calc(100% - 22%) 7px, calc(100% - 20%) 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+    z-index: -1;
+}
+.fsg_bgr_red .fsg_card::before{
+    background-color: #470202;
+} 
+
+.fsg_card__title{
+    margin: -9px 10%;
+    height: 38px;
+    background-image: linear-gradient(to right, rgba(84, 84, 252, 0.06) 15%, #034aad 50%, rgba(79, 79, 252, 0.06) 85%);
+    font:13px/48px Arial;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8%) 100%, 8% 100%);
+}
+.fsg_bgr_red .fsg_card__title{
+    background-image: linear-gradient(to right, rgba(252, 84, 84, 0.06) 15%, #ad0303 50%, rgba(252, 79, 79, 0.06) 85%);
+}
+.fsg_card__list{margin: 10px 40px; padding: 10px 0;}
+.fsg_card__list li{font:12px/26px Arial; padding: 0; margin: 0;text-align: left;}
+.list_yt_video{color: rgb(228, 218, 218);font: 12px/26px Arial;text-decoration: none;}
+.list_yt_video:hover{text-decoration: underline;}
+
+.fsg_button{
+    background-color: #2875e9;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+    padding: 5px 15px;
+    text-decoration: none;
+    font: 12px/20px Arial;
+    color: white;
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+}
+.fsg_bgr_red .fsg_button{
+    background-color: #e92828!important;
+}
+.fsg_button::after{
+    content: "";
+    background-color: #0345a8;
+    background-image: linear-gradient(to top, #1342c2, #0e3ac2, #0c32c1, #0f29c0, #141dbe);
+    position: absolute;
+    left:1px; top:1px; right:1px; bottom:1px;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+    z-index: -1;
+}
+.fsg_bgr_red .fsg_button::after{    
+    background-color: #a80303!important;
+    background-image: linear-gradient(to top, #c21313, #c20e0e, #e20b0b, #c00f0f, #db1e1e);
+}
+.fsg_button__yellow{
+    background-color: #c1df18;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+    padding: 5px 15px;
+    text-decoration: none;
+    font: 12px/20px Arial;
+    color: yellow;
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+}
+.fsg_button__yellow::after{
+    content: "";
+    background-image: linear-gradient(to top, #c25e13, #cf7011, #da830f, #e5960e, #eea910);
+    position: absolute;
+    left:1px; top:1px; right:1px; bottom:1px;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+    z-index: -1;
+}
+.fsg_card__img{margin: 30px auto 0 auto; overflow: hidden;
+    position: relative;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+}
+.fsg_button__disabled{
+    background-color: #2f4669;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+    padding: 5px 15px;
+    text-decoration: none;
+    font: 12px/20px Arial;
+    color: rgb(236, 234, 234);
+    text-transform: uppercase;
+    display: inline-block;
+    pointer-events: none;
+    opacity: 0.5 !important; /* Fade effect */
+    cursor: not-allowed;
+    position: relative;
+}
+.fsg_bgr_red .fsg_button__disabled{
+    background-color: #692f2f;
+}
+.fsg_button__disabled::after{
+    content: "";
+    background-color: #272763;
+    position: absolute;
+    left:1px; top:1px; right:1px; bottom:1px;
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, calc(100% - 10%) 100%, 0 100%, 0 20%);
+    z-index: -1;
+}
+.fsg_bgr_red .fsg_button__disabled::after{
+    background-color: #632727;
+}
