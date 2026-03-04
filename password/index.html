@@ -1,0 +1,538 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vault</title>
+  <style>
+    :root {
+      --bg-0: #05070d;
+      --bg-1: #0a1020;
+      --bg-2: #111b34;
+      --neon-cyan: #32f0ff;
+      --neon-blue: #4f8bff;
+      --neon-green: #3dff8d;
+      --neon-pink: #ff4fd8;
+      --text-main: #e8f4ff;
+      --text-dim: #8ea5c4;
+      --panel: rgba(12, 20, 40, 0.72);
+      --panel-border: rgba(91, 162, 255, 0.4);
+      --danger: #ff5878;
+      --ok: #4dff9f;
+      --shadow-neon: 0 0 14px rgba(50, 240, 255, 0.35), 0 0 26px rgba(79, 139, 255, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      font-family: "Segoe UI", "Trebuchet MS", Tahoma, sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at 20% 0%, #142851 0%, transparent 45%),
+                  radial-gradient(circle at 80% 100%, #1a304f 0%, transparent 40%),
+                  linear-gradient(135deg, var(--bg-0), var(--bg-1) 45%, var(--bg-2));
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -15vmax;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::before {
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 0px,
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px,
+          transparent 28px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.02) 0px,
+          rgba(255, 255, 255, 0.02) 1px,
+          transparent 1px,
+          transparent 28px
+        );
+      transform: perspective(900px) rotateX(62deg) translateY(-12%);
+      opacity: 0.5;
+      animation: driftGrid 18s linear infinite;
+    }
+
+    body::after {
+      background: radial-gradient(circle, rgba(79, 139, 255, 0.2), transparent 60%);
+      filter: blur(60px);
+      animation: pulseGlow 6s ease-in-out infinite;
+      z-index: -3;
+    }
+
+    @keyframes driftGrid {
+      from { transform: perspective(900px) rotateX(62deg) translateY(-12%) translateX(0); }
+      to { transform: perspective(900px) rotateX(62deg) translateY(-12%) translateX(28px); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.25; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(1.12); }
+    }
+
+    .app-shell {
+      width: min(1100px, 92vw);
+      margin: 3rem auto;
+      position: relative;
+    }
+
+    .panel {
+      border: 1px solid var(--panel-border);
+      background: var(--panel);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      box-shadow: var(--shadow-neon);
+    }
+
+    .lock-screen {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 1.75rem;
+      align-items: center;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .lock-screen.hidden {
+      opacity: 0;
+      transform: translateY(15px) scale(0.98);
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .lock-info h1 {
+      font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 18px rgba(50, 240, 255, 0.45);
+    }
+
+    .lock-info p {
+      color: var(--text-dim);
+      line-height: 1.6;
+      max-width: 46ch;
+    }
+
+    .display {
+      margin-top: 1.1rem;
+      background: rgba(6, 12, 24, 0.8);
+      border: 1px solid rgba(82, 163, 255, 0.45);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      min-height: 72px;
+      display: grid;
+      align-content: center;
+      gap: 0.28rem;
+    }
+
+    .display-code {
+      font-size: 1.35rem;
+      letter-spacing: 0.25em;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .status {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      min-height: 1.2em;
+    }
+
+    .status.error {
+      color: var(--danger);
+      text-shadow: 0 0 10px rgba(255, 88, 120, 0.35);
+    }
+
+    .status.success {
+      color: var(--ok);
+      text-shadow: 0 0 10px rgba(77, 255, 159, 0.35);
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+      width: 320px;
+      min-width: 320px;
+      max-width: 320px;
+      align-self: center;
+      justify-self: center;
+    }
+
+    .key {
+      border: 1px solid rgba(102, 166, 255, 0.45);
+      background: linear-gradient(180deg, rgba(24, 40, 78, 0.9), rgba(11, 20, 42, 0.95));
+      color: var(--text-main);
+      border-radius: 14px;
+      height: 78px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.14s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .key:hover {
+      transform: translateY(-2px);
+      border-color: rgba(50, 240, 255, 0.8);
+      box-shadow: 0 0 12px rgba(50, 240, 255, 0.24);
+    }
+
+    .key:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .key.action {
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hub {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      position: absolute;
+      inset: 0;
+    }
+
+    .hub.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: static;
+    }
+
+    .hub-inner {
+      padding: 1.6rem;
+    }
+
+    .hub-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .hub-head h2 {
+      font-size: clamp(1.35rem, 2.8vw, 2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neon-green);
+      text-shadow: 0 0 16px rgba(61, 255, 141, 0.3);
+    }
+
+    .hub-head p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.95rem;
+    }
+
+    .game-card {
+      border: 1px solid rgba(91, 162, 255, 0.38);
+      background: linear-gradient(160deg, rgba(15, 30, 58, 0.94), rgba(8, 16, 34, 0.95));
+      border-radius: 15px;
+      padding: 1rem;
+      min-height: 112px;
+      display: grid;
+      align-content: space-between;
+      text-decoration: none;
+      color: var(--text-main);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    .game-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(120deg, transparent 20%, rgba(50, 240, 255, 0.2), transparent 80%);
+      transform: translateX(-105%);
+      transition: transform 0.45s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(50, 240, 255, 0.78);
+      box-shadow: 0 0 16px rgba(50, 240, 255, 0.2);
+    }
+
+    .game-card:hover::before {
+      transform: translateX(105%);
+    }
+
+    .game-name {
+      font-size: 1.06rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .game-link {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      opacity: 0.92;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .hint {
+      margin-top: 1rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .lock-screen {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <section id="lockScreen" class="panel lock-screen" aria-label="Password lock screen">
+      <div class="lock-info">
+        <h1>The Vault</h1>
+        <p>Enter the 4-digit passcode using the keypad or your keyboard. Press Enter to submit, or Clear to reset.</p>
+        <div class="display" role="status" aria-live="polite">
+          <div id="displayCode" class="display-code">_ _ _ _</div>
+          <div id="status" class="status">Waiting for code...</div>
+        </div>
+        <p class="hint">Keyboard support: number keys, Backspace, Enter.</p>
+      </div>
+
+      <div class="keypad" aria-label="Numeric keypad">
+        <button class="key" data-key="1">1</button>
+        <button class="key" data-key="2">2</button>
+        <button class="key" data-key="3">3</button>
+        <button class="key" data-key="4">4</button>
+        <button class="key" data-key="5">5</button>
+        <button class="key" data-key="6">6</button>
+        <button class="key" data-key="7">7</button>
+        <button class="key" data-key="8">8</button>
+        <button class="key" data-key="9">9</button>
+        <button class="key action" data-action="clear">Clear</button>
+        <button class="key" data-key="0">0</button>
+        <button class="key action" data-action="submit">Enter</button>
+      </div>
+    </section>
+
+    <section id="gameHub" class="panel hub" aria-label="Games page">
+      <div class="hub-inner">
+        <div class="hub-head">
+          <h2>Arcade Select</h2>
+          <p>Choose a game and launch instantly</p>
+        </div>
+        <div id="gamesGrid" class="games-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const PASSCODE_HASH = "c6bb15225eca43aca18f2ceb395c34012a6f95fe76c097576c04be49f5875fa3";
+    const HUB_LAUNCH_KEY = "passwordGameLaunch";
+
+    const games = [
+      { name: "Cookie Clicker", url: "https://www.answersthroughathletes.org/password/cookie-clicker" },
+      { name: "Mario", url: "https://www.answersthroughathletes.org/password/mario" },
+      { name: "2048", url: "https://www.answersthroughathletes.org/password/2048" },
+      { name: "Wordle", url: "https://www.answersthroughathletes.org/password/wordle" },
+      { name: "Coming Soon", url: "#", placeholder: true },
+      { name: "Coming Soon", url: "#", placeholder: true },
+      { name: "Coming Soon", url: "#", placeholder: true },
+      { name: "Coming Soon", url: "#", placeholder: true }
+    ];
+
+    let currentInput = "";
+
+    const lockScreen = document.getElementById("lockScreen");
+    const gameHub = document.getElementById("gameHub");
+    const displayCode = document.getElementById("displayCode");
+    const status = document.getElementById("status");
+    const gamesGrid = document.getElementById("gamesGrid");
+
+    function normalizePath(pathname) {
+      const normalized = (pathname || "/").replace(/\/+$/, "");
+      return normalized || "/";
+    }
+
+    function renderDisplay() {
+      const digits = currentInput.split("").map(() => "*");
+      while (digits.length < 4) digits.push("_");
+      displayCode.textContent = digits.join(" ");
+    }
+
+    function setStatus(message, type = "") {
+      status.textContent = message;
+      status.className = "status" + (type ? ` ${type}` : "");
+    }
+
+    function pushDigit(digit) {
+      if (currentInput.length >= 4) return;
+      currentInput += digit;
+      renderDisplay();
+      setStatus("Code entered. Press Enter to submit.");
+    }
+
+    function backspace() {
+      if (!currentInput.length) return;
+      currentInput = currentInput.slice(0, -1);
+      renderDisplay();
+      setStatus("Digit removed.");
+    }
+
+    function clearAll() {
+      currentInput = "";
+      renderDisplay();
+      setStatus("Input cleared.");
+    }
+
+    function unlock() {
+      setStatus("Access granted.", "success");
+      lockScreen.classList.add("hidden");
+      setTimeout(() => {
+        buildGames();
+        gameHub.classList.add("active");
+      }, 260);
+    }
+
+    function deny() {
+      setStatus("Access denied. Try again.", "error");
+      currentInput = "";
+      renderDisplay();
+      lockScreen.animate(
+        [
+          { transform: "translateX(0)" },
+          { transform: "translateX(-8px)" },
+          { transform: "translateX(8px)" },
+          { transform: "translateX(0)" }
+        ],
+        { duration: 220, iterations: 1 }
+      );
+    }
+
+    async function sha256(input) {
+      const bytes = new TextEncoder().encode(input);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", bytes);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function submitCode() {
+      if (currentInput.length !== 4) {
+        setStatus("Enter exactly 4 digits.", "error");
+        return;
+      }
+
+      const enteredHash = await sha256(currentInput);
+      if (enteredHash === PASSCODE_HASH) {
+        unlock();
+      } else {
+        deny();
+      }
+    }
+
+    function buildGames() {
+      gamesGrid.innerHTML = "";
+      games.forEach((game) => {
+        const card = document.createElement("a");
+        card.className = "game-card";
+        card.href = game.url;
+        card.innerHTML = `
+          <div class="game-name">${game.name}</div>
+          <div class="game-link">${game.url}</div>
+        `;
+
+        if (game.placeholder) {
+          card.addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("Add your next game by editing the games array in index.html.");
+          });
+          card.setAttribute("aria-disabled", "true");
+        } else {
+          card.addEventListener("click", () => {
+            const gamePath = normalizePath(new URL(game.url).pathname);
+            const launchData = {
+              path: gamePath,
+              expiresAt: Date.now() + 15000
+            };
+            localStorage.setItem(HUB_LAUNCH_KEY, JSON.stringify(launchData));
+          });
+        }
+
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+        gamesGrid.appendChild(card);
+      });
+    }
+
+    document.querySelectorAll(".keypad .key").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const digit = btn.dataset.key;
+        const action = btn.dataset.action;
+
+        if (digit) pushDigit(digit);
+        if (action === "clear") clearAll();
+        if (action === "submit") {
+          void submitCode();
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (gameHub.classList.contains("active")) return;
+
+      if (/^[0-9]$/.test(e.key)) {
+        pushDigit(e.key);
+        return;
+      }
+
+      if (e.key === "Backspace") {
+        e.preventDefault();
+        backspace();
+        return;
+      }
+
+      if (e.key === "Escape") {
+        clearAll();
+        return;
+      }
+
+      if (e.key === "Enter") {
+        void submitCode();
+      }
+    });
+
+    renderDisplay();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cookie Clicker Deluxe</title>
+<script>
+(() => {
+  const HUB_URL = "https://www.answersthroughathletes.org/password";
+  const HUB_LAUNCH_KEY = "passwordGameLaunch";
+
+  const normalizePath = (pathname) => {
+    const normalized = (pathname || "/").replace(/\/+$/, "");
+    return normalized || "/";
+  };
+
+  const redirectToHub = () => window.location.replace(HUB_URL);
+
+  try {
+    const raw = localStorage.getItem(HUB_LAUNCH_KEY);
+    if (!raw) {
+      redirectToHub();
+      return;
+    }
+
+    const launchData = JSON.parse(raw);
+    localStorage.removeItem(HUB_LAUNCH_KEY);
+
+    const currentPath = normalizePath(window.location.pathname);
+    const allowedPath = normalizePath(launchData && launchData.path);
+    const expiresAt = Number(launchData && launchData.expiresAt);
+    const isFresh = Number.isFinite(expiresAt) && expiresAt >= Date.now();
+
+    if (!isFresh || allowedPath !== currentPath) {
+      redirectToHub();
+    }
+  } catch (error) {
+    localStorage.removeItem(HUB_LAUNCH_KEY);
+    redirectToHub();
+  }
+})();
+</script>
+<style>
+:root{
+  --bg-1:#2d1a12;
+  --bg-2:#45291c;
+  --bg-3:#6a3f22;
+  --text:#ffe8bf;
+  --panel:#20130e;
+  --line:#5f3720;
+  --cookie:#b8773e;
+  --cookie-dark:#8d5228;
+  --good:#79ffb1;
+  --rare:#8dd7ff;
+  --bad:#ff9595;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Trebuchet MS","Segoe UI",sans-serif;
+  color:var(--text);
+  height:100vh;
+  display:flex;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 14%,rgba(255,210,132,.22),transparent 45%),
+    radial-gradient(circle at 80% 15%,rgba(255,135,85,.1),transparent 38%),
+    linear-gradient(145deg,var(--bg-1),var(--bg-2) 42%,var(--bg-3));
+  transition:background .35s ease,color .35s ease;
+}
+
+body.golden-theme{
+  --text:#fff3cb;
+  --panel:#2a1e0f;
+  --line:#c68d1f;
+  background:
+    radial-gradient(circle at 18% 14%,rgba(255,243,183,.38),transparent 42%),
+    radial-gradient(circle at 82% 10%,rgba(255,210,88,.24),transparent 45%),
+    linear-gradient(145deg,#4a320a,#7a5011 45%,#a76e14);
+}
+
+#leftPanel{
+  width:64%;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  padding:100px 28px 20px;
+  gap:10px;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+#landscape{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-5;
+  overflow:hidden;
+}
+
+#landscape .sky{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 22% 14%,rgba(255,232,181,.32),transparent 30%),
+    radial-gradient(circle at 72% 20%,rgba(255,183,126,.24),transparent 36%),
+    linear-gradient(180deg,#e8c083 0%,#bf8652 38%,#6f4c35 66%,#2e241d 100%);
+}
+
+#landscape .sky::before,
+#landscape .sky::after{
+  content:"";
+  position:absolute;
+  border-radius:999px;
+  background:rgba(255,247,225,.2);
+  filter:blur(1px);
+}
+
+#landscape .sky::before{
+  width:24%;
+  height:7%;
+  left:11%;
+  top:14%;
+  box-shadow:16vw 3vh 0 rgba(255,247,225,.12),38vw 6vh 0 rgba(255,247,225,.18);
+}
+
+#landscape .sky::after{
+  width:20%;
+  height:6%;
+  left:40%;
+  top:22%;
+  box-shadow:20vw -2vh 0 rgba(255,247,225,.14),-22vw 5vh 0 rgba(255,247,225,.09);
+}
+
+#landscape .sun{
+  position:absolute;
+  width:clamp(100px,14vw,220px);
+  height:clamp(100px,14vw,220px);
+  border-radius:50%;
+  top:8%;
+  right:10%;
+  background:radial-gradient(circle,#fff1c7 0%,#f4b76a 58%,rgba(244,166,95,0) 72%);
+  filter:blur(1px);
+}
+
+#landscape .mountain{
+  position:absolute;
+  bottom:31%;
+  width:48%;
+  height:36%;
+  clip-path:polygon(0 100%,50% 0,100% 100%);
+  background:linear-gradient(180deg,#6d4a34,#37261d);
+  opacity:.8;
+}
+
+#landscape .m1{left:-10%;height:34%}
+#landscape .m2{left:20%;height:40%;background:linear-gradient(180deg,#7a5439,#412a1d)}
+#landscape .m3{left:52%;height:35%;background:linear-gradient(180deg,#66432f,#321f18)}
+
+#landscape .hills{
+  position:absolute;
+  left:-9%;
+  right:-9%;
+  bottom:-8%;
+  height:43%;
+  background:
+    radial-gradient(ellipse at 12% 78%,#6b9f52 0 25%,transparent 26%),
+    radial-gradient(ellipse at 34% 86%,#598943 0 30%,transparent 31%),
+    radial-gradient(ellipse at 58% 82%,#4d773a 0 31%,transparent 32%),
+    radial-gradient(ellipse at 80% 87%,#416834 0 31%,transparent 32%),
+    radial-gradient(ellipse at 102% 80%,#5f9349 0 25%,transparent 26%),
+    linear-gradient(180deg,#78a95b,#3b5f2f);
+  border-top:2px solid rgba(255,233,190,.18);
+}
+
+#leftPanel::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+  background:
+    repeating-linear-gradient(0deg,transparent 0,transparent 52px,rgba(255,255,255,.03) 53px,transparent 54px),
+    linear-gradient(180deg,rgba(255,255,255,.06),transparent 35%);
+}
+
+#gameHud{
+  position:absolute;
+  top:16px;
+  left:16px;
+  right:16px;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(110px,1fr));
+  gap:8px;
+}
+
+.hudCard{
+  background:rgba(26,15,10,.62);
+  border:1px solid rgba(255,218,171,.2);
+  border-radius:10px;
+  padding:8px 10px;
+  backdrop-filter:blur(2px);
+}
+
+body.golden-theme .hudCard{
+  background:rgba(69,45,14,.72);
+  border-color:rgba(255,227,149,.42);
+}
+
+.hudLabel{font-size:.72rem;opacity:.75;text-transform:uppercase;letter-spacing:.05em}
+.hudValue{font-size:.95rem;font-weight:700;margin-top:2px}
+
+#cookieStage{
+  position:relative;
+  width:min(420px,56vh,80vw);
+  aspect-ratio:1/1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#cookieGlow{
+  position:absolute;
+  width:72%;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  filter:blur(18px);
+  background:radial-gradient(circle,#ffcf81 0%,rgba(255,167,86,.52) 42%,transparent 70%);
+  animation:breath 3s ease-in-out infinite;
+}
+
+body.golden-theme #cookieGlow{
+  background:radial-gradient(circle,#fff2b2 0%,rgba(255,198,90,.64) 44%,transparent 70%);
+}
+
+@keyframes breath{0%,100%{transform:scale(.95)}50%{transform:scale(1.06)}}
+
+#cookie{
+  width:68%;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  position:relative;
+  cursor:pointer;
+  transition:transform .08s ease;
+  background:
+    radial-gradient(circle at 30% 28%,#eebf7d 0%,var(--cookie) 48%,var(--cookie-dark) 84%),
+    radial-gradient(circle at 70% 68%,rgba(255,255,255,.06),transparent 45%);
+  box-shadow:
+    inset -18px -16px 26px rgba(74,42,17,.55),
+    inset 14px 18px 20px rgba(255,226,173,.2),
+    0 22px 45px rgba(0,0,0,.5);
+}
+
+#cookie:active{transform:scale(.94)}
+
+.chip{
+  width:clamp(10px,2.3vw,16px);
+  aspect-ratio:1/1;
+  background:radial-gradient(circle at 30% 30%,#5e3220,#2f170f 70%);
+  border-radius:50%;
+  position:absolute;
+  box-shadow:inset 0 1px 2px rgba(255,210,160,.15),0 1px 2px rgba(0,0,0,.25);
+}
+
+#stats{
+  margin-top:4px;
+  text-align:center;
+  background:rgba(27,16,11,.62);
+  border:1px solid rgba(255,215,160,.22);
+  border-radius:14px;
+  padding:14px 18px;
+  width:min(540px,92vw);
+}
+
+body.golden-theme #stats{
+  background:rgba(61,39,13,.75);
+  border-color:rgba(255,219,136,.5);
+}
+
+#cookieCount{font-size:2.1rem;margin-bottom:2px;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+#cps{opacity:.95;font-weight:600}
+#clickPowerDisplay{opacity:.85;margin-top:3px}
+
+#buffBar{margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+.buffChip{
+  background:rgba(255,214,142,.14);
+  border:1px solid rgba(255,214,142,.35);
+  color:#ffe6ba;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:.78rem;
+  min-width:90px;
+}
+
+#eventBanner{
+  position:absolute;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%) translateY(24px);
+  opacity:0;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(255,234,200,.4);
+  background:rgba(23,13,9,.88);
+  transition:.35s ease;
+  pointer-events:none;
+  white-space:nowrap;
+  max-width:90%;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+
+#eventBanner.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#eventBanner.good{box-shadow:0 0 24px rgba(121,255,177,.35)}
+#eventBanner.rare{box-shadow:0 0 24px rgba(141,215,255,.35)}
+#eventBanner.bad{box-shadow:0 0 24px rgba(255,149,149,.3)}
+
+#golden{
+  position:absolute;
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 24%,#fffcd9 0%,#ffd768 42%,#d18b18 86%);
+  box-shadow:
+    inset -10px -10px 18px rgba(123,77,15,.45),
+    inset 10px 10px 18px rgba(255,245,181,.35),
+    0 0 25px rgba(255,215,82,.8),
+    0 0 60px rgba(255,193,65,.4);
+  border:2px solid rgba(255,235,163,.65);
+  cursor:pointer;
+  animation:goldenPulse 1.05s ease-in-out infinite alternate;
+  overflow:hidden;
+}
+
+.goldenChip{
+  position:absolute;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#8f5a1e,#533109 74%);
+  box-shadow:0 1px 1px rgba(0,0,0,.28),inset 0 1px 2px rgba(255,220,156,.16);
+}
+
+@keyframes goldenPulse{from{transform:scale(.95)}to{transform:scale(1.07)}}
+
+#rightPanel{
+  width:36%;
+  background:linear-gradient(180deg,#1d110d,#120a07);
+  border-left:3px solid #5a331f;
+  height:100vh;
+  overflow-y:auto;
+  padding:14px;
+}
+
+body.golden-theme #rightPanel{
+  background:linear-gradient(180deg,#34230f,#241708);
+  border-left-color:#a9751b;
+}
+
+.panelBlock{
+  background:var(--panel);
+  border:1px solid rgba(255,214,156,.14);
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+body.golden-theme .panelBlock{border-color:rgba(255,218,131,.34)}
+
+.sectionTitle{margin-bottom:8px;font-size:1rem;opacity:.95;letter-spacing:.03em}
+
+.shopItem{
+  background:linear-gradient(180deg,#392216,#2c1a12);
+  border:1px solid rgba(255,219,164,.15);
+  margin-bottom:8px;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.14s;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.shopItem:hover{transform:translateY(-1px);background:linear-gradient(180deg,#4a2b1d,#332015)}
+.shopItem.disabled{opacity:.42;cursor:not-allowed;transform:none}
+.itemInfo{display:flex;flex-direction:column;gap:2px}
+.itemMeta{font-size:.8rem;opacity:.82}
+
+.shopControls{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+  font-size:.82rem;
+}
+
+.buyModes{display:flex;gap:6px}
+.modeBtn{
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,214,156,.22);
+  background:#2e1a12;
+  color:#ffdca8;
+  font-size:.76rem;
+  cursor:pointer;
+}
+
+.modeBtn.active{
+  background:linear-gradient(180deg,#9b6227,#6a3f1c);
+  border-color:rgba(255,227,166,.48);
+}
+
+.upgradeMain{display:flex;align-items:center;gap:9px}
+
+.upgradeIcon{
+  width:34px;
+  height:34px;
+  border-radius:8px;
+  border:1px solid rgba(255,227,173,.22);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.12);
+  flex:0 0 auto;
+}
+
+.icon-finger{background:linear-gradient(135deg,#f3c5a0,#ce8f67)}
+.icon-carpal{background:linear-gradient(135deg,#b0d5ec,#5d9fcd)}
+.icon-ambi{background:linear-gradient(135deg,#f6c4da,#c96ea2)}
+.icon-ultra{background:linear-gradient(135deg,#fce78a,#e7a81f)}
+.icon-glove{background:linear-gradient(135deg,#b6f1d8,#2f9b78)}
+.icon-syrup{background:linear-gradient(135deg,#ffe2aa,#cc7426)}
+.icon-titan{background:linear-gradient(135deg,#f2cfbf,#a46848)}
+.icon-neural{background:linear-gradient(135deg,#b9b8ff,#6869d8)}
+.icon-lens{background:linear-gradient(135deg,#b6ecff,#2e93bd)}
+.icon-oven{background:linear-gradient(135deg,#f8bb8a,#ca5c2b)}
+.icon-grandma{background:linear-gradient(135deg,#f3dfcf,#c59f7b)}
+.icon-factory{background:linear-gradient(135deg,#c3c7cf,#6f7682)}
+.icon-quantum{background:linear-gradient(135deg,#b6ffd9,#3f9a76)}
+.icon-legacy{background:linear-gradient(135deg,#ffec9e,#b4851b)}
+
+#prestigeSummary{font-size:.84rem;line-height:1.45;opacity:.92}
+#prestigeButton{width:100%;margin-top:8px;margin-right:0}
+#prestigeButton.disabled{opacity:.45;cursor:not-allowed}
+
+button{
+  background:linear-gradient(180deg,#704228,#4f2f1d);
+  color:#fff2d0;
+  border:1px solid rgba(255,209,156,.25);
+  padding:7px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-right:6px;
+  margin-bottom:6px;
+}
+button:hover{filter:brightness(1.12)}
+button.disabled{opacity:.45;cursor:not-allowed;filter:none}
+
+body.golden-theme button{background:linear-gradient(180deg,#9b6a20,#6d4914)}
+
+textarea{
+  width:100%;
+  min-height:88px;
+  background:#2a1811;
+  color:#ffe6bc;
+  border:1px solid #6a4128;
+  border-radius:8px;
+  padding:8px;
+  margin-top:6px;
+  resize:vertical;
+}
+
+#eventFeed{max-height:130px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.eventLine{font-size:.8rem;padding:6px 7px;border-radius:7px;background:#2a1811;border:1px solid rgba(255,220,178,.12)}
+
+#saveHelp{font-size:.8rem;opacity:.86;line-height:1.45;margin-bottom:6px}
+#autoSaveInfo{font-size:.77rem;opacity:.8;margin-top:4px}
+
+.floating{
+  position:absolute;
+  font-weight:800;
+  pointer-events:none;
+  animation:floatUp .95s ease-out forwards;
+  text-shadow:0 2px 7px rgba(0,0,0,.45);
+  color:#ffe6b6;
+}
+
+.floating.crit{color:#8de6ff;font-size:1.1rem}
+@keyframes floatUp{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-62px) scale(1.08)}}
+
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{background:#6b4229;border-radius:4px}
+
+@media (max-width: 980px){
+  body{flex-direction:column;overflow:hidden;height:100vh}
+  #leftPanel,#rightPanel{width:100%}
+  #leftPanel{height:58vh;min-height:0;padding:86px 14px 14px}
+  #rightPanel{height:42vh;overflow-y:auto}
+  #gameHud{grid-template-columns:repeat(2,minmax(100px,1fr))}
+  #cookieStage{width:min(360px,56vh,88vw)}
+  #stats{min-width:0;width:95%}
+}
+</style>
+</head>
+<body>
+
+<div id="leftPanel">
+  <div id="landscape">
+    <div class="sky"></div>
+    <div class="sun"></div>
+    <div class="mountain m1"></div>
+    <div class="mountain m2"></div>
+    <div class="mountain m3"></div>
+    <div class="hills"></div>
+  </div>
+
+  <div id="gameHud">
+    <div class="hudCard"><div class="hudLabel">Total Baked</div><div id="totalCookies" class="hudValue">0</div></div>
+    <div class="hudCard"><div class="hudLabel">Total Clicks</div><div id="totalClicks" class="hudValue">0</div></div>
+    <div class="hudCard"><div class="hudLabel">Combo</div><div id="comboDisplay" class="hudValue">x1.00</div></div>
+    <div class="hudCard"><div class="hudLabel">Crit Chance</div><div id="critDisplay" class="hudValue">5%</div></div>
+    <div class="hudCard"><div class="hudLabel">Prestige</div><div id="prestigeHud" class="hudValue">0</div></div>
+  </div>
+
+  <div id="cookieStage">
+    <div id="cookieGlow"></div>
+    <div id="cookie"></div>
+  </div>
+
+  <div id="stats">
+    <h1 id="cookieCount">0 Cookies</h1>
+    <div id="cps">0 per second</div>
+    <div id="clickPowerDisplay">Click Power: 1</div>
+    <div id="buffBar"></div>
+  </div>
+
+  <div id="eventBanner"></div>
+</div>
+
+<div id="rightPanel">
+  <div class="panelBlock">
+    <div class="sectionTitle">Prestige</div>
+    <div id="prestigeSummary">
+      Legacy Chips: <strong id="prestigePointsDisplay">0</strong><br>
+      Gain on reset: <strong id="prestigeGainDisplay">0</strong><br>
+      Permanent bonus: <strong id="prestigeBonusDisplay">+0%</strong>
+    </div>
+    <button id="prestigeButton" onclick="doPrestige()">Ascend for Legacy Chips</button>
+  </div>
+
+  <div class="panelBlock">
+    <div class="sectionTitle">Buildings</div>
+    <div class="shopControls">
+      <span>Buy Amount</span>
+      <div class="buyModes">
+        <button class="modeBtn active" data-buy="1" onclick="setBuyAmount(1)">x1</button>
+        <button class="modeBtn" data-buy="10" onclick="setBuyAmount(10)">x10</button>
+        <button class="modeBtn" data-buy="25" onclick="setBuyAmount(25)">x25</button>
+      </div>
+    </div>
+    <div id="shop"></div>
+  </div>
+
+  <div class="panelBlock">
+    <div class="sectionTitle">Abilities</div>
+    <button id="burstButton" onclick="activateSugarBurst()">Activate Sugar Burst</button>
+    <div id="burstCooldownText" class="itemMeta">Ready. Grants temporary click and CPS boost.</div>
+  </div>
+
+  <div class="panelBlock">
+    <div class="sectionTitle">Upgrades</div>
+    <div id="upgrades"></div>
+  </div>
+
+  <div class="panelBlock">
+    <div class="sectionTitle">Random Events</div>
+    <div id="eventFeed"></div>
+  </div>
+
+  <div class="panelBlock">
+    <div class="sectionTitle">Save / Load</div>
+    <div id="saveHelp">How to export: click <strong>Export Save</strong>, then copy the code from the box. To restore later, paste code and click <strong>Import Save</strong>.</div>
+    <div>
+      <button onclick="exportSave()">Export Save</button>
+      <button onclick="importSave()">Import Save</button>
+      <button onclick="loadAutoSave()">Load Auto Save</button>
+      <button onclick="resetEverything()">Reset Everything</button>
+      <textarea id="saveBox" placeholder="Your save code will appear here..."></textarea>
+      <div id="autoSaveInfo">Auto-save: waiting...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cookieEl=document.getElementById('cookie')
+const cookieCountEl=document.getElementById('cookieCount')
+const cpsEl=document.getElementById('cps')
+const clickPowerDisplay=document.getElementById('clickPowerDisplay')
+const shopEl=document.getElementById('shop')
+const upgradesEl=document.getElementById('upgrades')
+const leftPanel=document.getElementById('leftPanel')
+const saveBox=document.getElementById('saveBox')
+const eventFeed=document.getElementById('eventFeed')
+const eventBanner=document.getElementById('eventBanner')
+const buffBar=document.getElementById('buffBar')
+const burstButton=document.getElementById('burstButton')
+const burstCooldownText=document.getElementById('burstCooldownText')
+const autoSaveInfo=document.getElementById('autoSaveInfo')
+
+const totalCookiesEl=document.getElementById('totalCookies')
+const totalClicksEl=document.getElementById('totalClicks')
+const comboDisplay=document.getElementById('comboDisplay')
+const critDisplay=document.getElementById('critDisplay')
+const prestigeHud=document.getElementById('prestigeHud')
+const prestigePointsDisplay=document.getElementById('prestigePointsDisplay')
+const prestigeGainDisplay=document.getElementById('prestigeGainDisplay')
+const prestigeBonusDisplay=document.getElementById('prestigeBonusDisplay')
+const prestigeButton=document.getElementById('prestigeButton')
+
+let cookies=0
+let totalCookies=0
+let cookiesSincePrestige=0
+let totalClicks=0
+let cps=0
+let clickPower=1
+let critChance=.05
+let comboStreak=0
+let comboMultiplier=1
+let lastClickAt=0
+let globalBonus=1
+let achievementPoints=0
+let prestigePoints=0
+let goldenThemeUntil=0
+let buyAmount=1
+let burstCooldownUntil=0
+
+const activeBuffs=[]
+const COST_GROWTH=1.135
+
+const items=[
+  {name:'Cursor',baseCost:15,cps:.1,amount:0,desc:'Auto taps the cookie.'},
+  {name:'Grandma',baseCost:80,cps:.8,amount:0,desc:'Bakes cookies by hand.'},
+  {name:'Farm',baseCost:500,cps:4,amount:0,desc:'Grows cookie ingredients.'},
+  {name:'Bakery',baseCost:2200,cps:14,amount:0,desc:'Small neighborhood bakery.'},
+  {name:'Factory',baseCost:9000,cps:42,amount:0,desc:'Mass production line.'},
+  {name:'Mine',baseCost:38000,cps:125,amount:0,desc:'Extracts flavor crystals.'},
+  {name:'Shipment',baseCost:160000,cps:360,amount:0,desc:'Imports cosmic sugar.'},
+  {name:'Alchemy Lab',baseCost:700000,cps:1050,amount:0,desc:'Turns lead into cookies.'},
+  {name:'Portal',baseCost:2800000,cps:3200,amount:0,desc:'Pulls cookies from another realm.'},
+  {name:'Time Machine',baseCost:12000000,cps:9800,amount:0,desc:'Borrows cookies from tomorrow.'},
+  {name:'Prism',baseCost:50000000,cps:29000,amount:0,desc:'Refracts pure cookie energy.'}
+]
+const BASE_ITEM_CPS=items.map(item=>item.cps)
+
+const clickUpgrades=[
+  {name:'Reinforced Index Finger',cost:75,desc:'+1 click power',icon:'icon-finger',bought:false,apply:()=>clickPower+=1},
+  {name:'Carpal Tunnel Prevention',cost:300,desc:'+2 click power',icon:'icon-carpal',bought:false,apply:()=>clickPower+=2},
+  {name:'Ambidextrous',cost:1200,desc:'+4 click power',icon:'icon-ambi',bought:false,apply:()=>clickPower+=4},
+  {name:'Ultra Click',cost:6000,desc:'+10 click power',icon:'icon-ultra',bought:false,apply:()=>clickPower+=10},
+  {name:'Titanium Mouse',cost:18000,desc:'+22 click power',icon:'icon-titan',bought:false,apply:()=>clickPower+=22},
+  {name:'Neural Clicker',cost:52000,desc:'+45 click power',icon:'icon-neural',bought:false,apply:()=>clickPower+=45},
+  {name:'Precision Gloves',cost:12000,desc:'+3% crit chance',icon:'icon-glove',bought:false,apply:()=>critChance+=.03},
+  {name:'Focus Lens',cost:45000,desc:'+5% crit chance',icon:'icon-lens',bought:false,apply:()=>critChance+=.05},
+  {name:'Sugary Syrup',cost:18000,desc:'+10% CPS',icon:'icon-syrup',bought:false,apply:()=>globalBonus*=1.1},
+  {name:'Industrial Ovens',cost:95000,desc:'+18% CPS',icon:'icon-oven',bought:false,apply:()=>globalBonus*=1.18},
+  {name:'Grandma Training',cost:6000,desc:'Grandma output x2',icon:'icon-grandma',bought:false,apply:()=>{items[1].cps*=2}},
+  {name:'Factory Shift B',cost:250000,desc:'Factory output x1.8',icon:'icon-factory',bought:false,apply:()=>{items[4].cps*=1.8}},
+  {name:'Quantum Yield',cost:900000,desc:'All buildings +12% CPS',icon:'icon-quantum',bought:false,apply:()=>{items.forEach(item=>item.cps*=1.12)}},
+  {name:'Legacy Mix',cost:2500000,desc:'+25% CPS',icon:'icon-legacy',bought:false,apply:()=>globalBonus*=1.25}
+]
+
+const achievements=[
+  {id:'bake100',name:'Fresh Batch',desc:'Bake 100 cookies',check:()=>totalCookies>=100,unlocked:false},
+  {id:'bake5k',name:'Warm Oven',desc:'Bake 5,000 cookies',check:()=>totalCookies>=5000,unlocked:false},
+  {id:'bake1m',name:'Sugar Tycoon',desc:'Bake 1,000,000 cookies',check:()=>totalCookies>=1e6,unlocked:false},
+  {id:'click100',name:'Tap Dancer',desc:'Click 100 times',check:()=>totalClicks>=100,unlocked:false},
+  {id:'combo15',name:'Combo Crafter',desc:'Reach combo x1.60',check:()=>comboMultiplier>=1.6,unlocked:false},
+  {id:'own25',name:'Collector',desc:'Own 25 buildings total',check:()=>items.reduce((s,i)=>s+i.amount,0)>=25,unlocked:false}
+]
+
+function format(n){
+  if(n>=1e12)return(n/1e12).toFixed(2)+'T'
+  if(n>=1e9)return(n/1e9).toFixed(2)+'B'
+  if(n>=1e6)return(n/1e6).toFixed(2)+'M'
+  if(n>=1e3)return(n/1e3).toFixed(2)+'K'
+  return Math.floor(n)
+}
+
+function getCost(item){return Math.floor(item.baseCost*Math.pow(COST_GROWTH,item.amount))}
+function getBulkCost(item,qty){
+  const start=item.baseCost*Math.pow(COST_GROWTH,item.amount)
+  const multi=(Math.pow(COST_GROWTH,qty)-1)/(COST_GROWTH-1)
+  return Math.floor(start*multi)
+}
+function getPrestigeGain(){return Math.floor(Math.sqrt(cookiesSincePrestige/1000000))}
+function getPrestigeMultiplier(){return 1+(prestigePoints*.1)}
+
+function setBuyAmount(amount){
+  buyAmount=amount
+  document.querySelectorAll('.modeBtn').forEach(btn=>{
+    btn.classList.toggle('active',Number(btn.dataset.buy)===buyAmount)
+  })
+  updateUI()
+}
+
+function getBuffMultiplier(type){
+  return activeBuffs.filter(b=>b.type===type).reduce((m,b)=>m*(b.multiplier||1),1)
+}
+
+function getBuffCritBonus(){
+  return activeBuffs.filter(b=>b.type==='crit').reduce((s,b)=>s+(b.add||0),0)
+}
+
+function recalcCPS(){
+  const base=items.reduce((s,i)=>s+i.cps*i.amount,0)
+  const achBonus=1+(achievementPoints*.02)
+  cps=base*globalBonus*achBonus*getPrestigeMultiplier()
+}
+
+function updateGoldenTheme(){
+  document.body.classList.toggle('golden-theme',Date.now()<goldenThemeUntil)
+}
+
+function activateGoldenTheme(duration){
+  goldenThemeUntil=Math.max(goldenThemeUntil,Date.now()+duration)
+  updateGoldenTheme()
+}
+
+function updateBuffUI(){
+  buffBar.innerHTML=''
+  const now=Date.now()
+  activeBuffs.forEach(buff=>{
+    const left=Math.max(0,Math.ceil((buff.expiresAt-now)/1000))
+    const chip=document.createElement('div')
+    chip.className='buffChip'
+    chip.textContent=buff.label+' '+left+'s'
+    buffBar.appendChild(chip)
+  })
+}
+
+function updatePrestigeUI(){
+  const gain=Math.max(0,getPrestigeGain()-prestigePoints)
+  prestigePointsDisplay.textContent=prestigePoints
+  prestigeGainDisplay.textContent=gain
+  prestigeBonusDisplay.textContent='+'+Math.floor((getPrestigeMultiplier()-1)*100)+'%'
+  prestigeHud.textContent=prestigePoints
+  prestigeButton.classList.toggle('disabled',gain<=0)
+}
+
+function updateHUD(){
+  totalCookiesEl.textContent=format(totalCookies)
+  totalClicksEl.textContent=format(totalClicks)
+  comboDisplay.textContent='x'+comboMultiplier.toFixed(2)
+  const crit=Math.min(.95,critChance+getBuffCritBonus())*100
+  critDisplay.textContent=crit.toFixed(0)+'%'
+}
+
+function updateUI(){
+  cookieCountEl.textContent=format(cookies)+' Cookies'
+  cpsEl.textContent=format(cps*getBuffMultiplier('cps'))+' per second'
+  clickPowerDisplay.textContent='Click Power: '+format(clickPower)
+  updateHUD()
+  updateBuffUI()
+  updatePrestigeUI()
+  updateGoldenTheme()
+
+  const cdLeft=Math.max(0,Math.ceil((burstCooldownUntil-Date.now())/1000))
+  burstButton.classList.toggle('disabled',cdLeft>0)
+  burstCooldownText.textContent=cdLeft>0
+    ?('Cooldown: '+cdLeft+'s')
+    :'Ready. Grants +150% click and +100% CPS for 12s.'
+
+  document.querySelectorAll('.building').forEach((el,i)=>{
+    const cost=getBulkCost(items[i],buyAmount)
+    el.classList.toggle('disabled',cookies<cost)
+    el.querySelector('.cost').textContent='Cost (x'+buyAmount+'): '+format(cost)
+    el.querySelector('.amount').textContent='Owned: '+items[i].amount
+  })
+
+  document.querySelectorAll('.upgrade').forEach((el,i)=>{
+    if(clickUpgrades[i].bought)el.style.display='none'
+    else el.classList.toggle('disabled',cookies<clickUpgrades[i].cost)
+  })
+}
+
+function logEvent(text,tone='good'){
+  const line=document.createElement('div')
+  line.className='eventLine'
+  line.textContent=text
+  line.style.borderColor=tone==='rare'?'rgba(141,215,255,.35)':tone==='bad'?'rgba(255,149,149,.35)':'rgba(121,255,177,.35)'
+  eventFeed.prepend(line)
+  while(eventFeed.children.length>12)eventFeed.lastChild.remove()
+}
+
+function showBanner(text,tone='good'){
+  eventBanner.textContent=text
+  eventBanner.className='show '+tone
+  clearTimeout(showBanner.timer)
+  showBanner.timer=setTimeout(()=>eventBanner.className='',2200)
+}
+
+function addBuff(buff){
+  const current=activeBuffs.find(b=>b.id===buff.id)
+  if(current){
+    current.expiresAt=Date.now()+buff.duration
+    current.multiplier=buff.multiplier||current.multiplier
+    current.add=buff.add||current.add
+  }else{
+    activeBuffs.push({
+      id:buff.id,
+      label:buff.label,
+      type:buff.type,
+      multiplier:buff.multiplier,
+      add:buff.add,
+      expiresAt:Date.now()+buff.duration
+    })
+  }
+  updateUI()
+}
+
+function cleanupBuffs(){
+  const now=Date.now()
+  let changed=false
+  for(let i=activeBuffs.length-1;i>=0;i--){
+    if(activeBuffs[i].expiresAt<=now){
+      activeBuffs.splice(i,1)
+      changed=true
+    }
+  }
+  if(changed)updateUI()
+}
+
+function spawnFloating(x,y,value,isCrit=false){
+  const span=document.createElement('span')
+  span.className='floating'+(isCrit?' crit':'')
+  span.textContent=(isCrit?'CRIT +':'+')+format(value)
+  span.style.left=x+'px'
+  span.style.top=y+'px'
+  document.body.appendChild(span)
+  setTimeout(()=>span.remove(),930)
+}
+
+function resetRunProgress(){
+  cookies=0
+  cookiesSincePrestige=0
+  comboStreak=0
+  comboMultiplier=1
+  lastClickAt=0
+  clickPower=1
+  critChance=.05
+  globalBonus=1
+  burstCooldownUntil=0
+  activeBuffs.length=0
+  goldenThemeUntil=0
+
+  items.forEach((item,index)=>{
+    item.amount=0
+    item.cps=BASE_ITEM_CPS[index]
+  })
+  clickUpgrades.forEach(u=>u.bought=false)
+
+  recalcCPS()
+}
+
+function doPrestige(){
+  const gain=Math.max(0,getPrestigeGain()-prestigePoints)
+  if(gain<=0)return
+  prestigePoints+=gain
+  resetRunProgress()
+  showBanner('Ascended! +'+gain+' Legacy Chips','rare')
+  logEvent('Prestige reset complete. Legacy Chips gained: '+gain,'rare')
+  updateUI()
+}
+
+function activateSugarBurst(){
+  if(Date.now()<burstCooldownUntil)return
+  addBuff({id:'sugarburst_click',label:'Sugar Burst Click',type:'click',multiplier:2.5,duration:12000})
+  addBuff({id:'sugarburst_cps',label:'Sugar Burst CPS',type:'cps',multiplier:2,duration:12000})
+  burstCooldownUntil=Date.now()+45000
+  activateGoldenTheme(12000)
+  showBanner('Sugar Burst activated!','rare')
+  logEvent('Sugar Burst: +150% click and +100% CPS for 12s','rare')
+  updateUI()
+}
+
+function buyBuilding(i){
+  const item=items[i]
+  const qty=buyAmount
+  const cost=getBulkCost(item,qty)
+  if(cookies<cost)return
+  cookies-=cost
+  item.amount+=qty
+  recalcCPS()
+  updateUI()
+}
+
+function buyUpgrade(i){
+  const up=clickUpgrades[i]
+  if(up.bought||cookies<up.cost)return
+  cookies-=up.cost
+  up.bought=true
+  up.apply()
+  recalcCPS()
+  logEvent('Upgrade unlocked: '+up.name,'rare')
+  showBanner('Upgrade Purchased: '+up.name,'rare')
+  updateUI()
+}
+
+function createShop(){
+  items.forEach((item,i)=>{
+    const div=document.createElement('div')
+    div.className='shopItem building'
+    div.innerHTML=`
+      <div class="itemInfo">
+        <strong>${item.name}</strong>
+        <span class="itemMeta">${item.desc}</span>
+        <span class="cost"></span>
+        <span class="amount"></span>
+      </div>
+      <div>+${item.cps}/s</div>`
+    div.onclick=()=>buyBuilding(i)
+    shopEl.appendChild(div)
+  })
+}
+
+function createUpgrades(){
+  clickUpgrades.forEach((up,i)=>{
+    const div=document.createElement('div')
+    div.className='shopItem upgrade'
+    div.innerHTML=`
+      <div class="upgradeMain">
+        <span class="upgradeIcon ${up.icon}"></span>
+        <div class="itemInfo">
+          <strong>${up.name}</strong>
+          <span class="itemMeta">${up.desc}</span>
+          <span class="itemMeta">Cost: ${format(up.cost)}</span>
+        </div>
+      </div>
+      <div>Upgrade</div>`
+    div.onclick=()=>buyUpgrade(i)
+    upgradesEl.appendChild(div)
+  })
+}
+
+function checkAchievements(){
+  let unlockedAny=false
+  achievements.forEach(a=>{
+    if(!a.unlocked && a.check()){
+      a.unlocked=true
+      achievementPoints++
+      unlockedAny=true
+      showBanner('Achievement: '+a.name,'good')
+      logEvent('Achievement unlocked: '+a.name,'good')
+    }
+  })
+  if(unlockedAny){
+    recalcCPS()
+    updateUI()
+  }
+}
+
+cookieEl.addEventListener('click',e=>{
+  const now=performance.now()
+  comboStreak=(now-lastClickAt<850)?Math.min(comboStreak+1,30):0
+  lastClickAt=now
+  comboMultiplier=1+Math.min(comboStreak,20)*.04
+
+  const clickBuff=getBuffMultiplier('click')
+  const crit=Math.random()<Math.min(.95,critChance+getBuffCritBonus())
+  let gain=clickPower*comboMultiplier*clickBuff*getPrestigeMultiplier()
+  if(crit)gain*=3
+
+  cookies+=gain
+  totalCookies+=gain
+  cookiesSincePrestige+=gain
+  totalClicks++
+
+  spawnFloating(e.pageX,e.pageY,gain,crit)
+  checkAchievements()
+  updateUI()
+})
+
+setInterval(()=>{
+  cleanupBuffs()
+  const gain=cps*getBuffMultiplier('cps')/10
+  cookies+=gain
+  totalCookies+=gain
+  cookiesSincePrestige+=gain
+  checkAchievements()
+  updateGoldenTheme()
+  updateUI()
+},100)
+
+function spawnGolden(){
+  if(document.getElementById('golden'))return
+  const g=document.createElement('div')
+  g.id='golden'
+  g.style.top=Math.random()*(leftPanel.clientHeight-130)+50+'px'
+  g.style.left=Math.random()*(leftPanel.clientWidth-130)+20+'px'
+
+  for(let i=0;i<11;i++){
+    const chip=document.createElement('span')
+    chip.className='goldenChip'
+    chip.style.left=(Math.random()*74+8)+'%'
+    chip.style.top=(Math.random()*74+8)+'%'
+    g.appendChild(chip)
+  }
+
+  leftPanel.appendChild(g)
+  g.onclick=()=>{triggerRandomEvent();g.remove()}
+  setTimeout(()=>{if(g.parentNode)g.remove()},10000)
+}
+
+function triggerRandomEvent(){
+  const events=[
+    ()=>{
+      const duration=15000
+      addBuff({id:'frenzy',label:'Sugar Frenzy',type:'cps',multiplier:7,duration})
+      activateGoldenTheme(duration)
+      showBanner('Golden Frenzy! CPS x7 for 15s','rare')
+      logEvent('Golden Frenzy activated (x7 CPS)','rare')
+    },
+    ()=>{
+      const duration=15000
+      addBuff({id:'clickstorm',label:'Click Storm',type:'click',multiplier:2,duration})
+      activateGoldenTheme(duration)
+      showBanner('Golden Click Storm! x2 clicks for 15s','good')
+      logEvent('Click Storm activated (x2 clicks)','good')
+    },
+    ()=>{
+      const bonus=Math.max(120,cps*45+clickPower*50)
+      cookies+=bonus
+      totalCookies+=bonus
+      cookiesSincePrestige+=bonus
+      activateGoldenTheme(4500)
+      showBanner('Golden Rain! +'+format(bonus)+' cookies','good')
+      logEvent('Golden Rain dropped '+format(bonus)+' cookies','good')
+    },
+    ()=>{
+      const duration=20000
+      addBuff({id:'luckybite',label:'Lucky Bite',type:'crit',add:.15,duration})
+      activateGoldenTheme(duration)
+      showBanner('Lucky Bite! +15% crit chance for 20s','rare')
+      logEvent('Lucky Bite buff applied','rare')
+    }
+  ]
+  events[Math.floor(Math.random()*events.length)]()
+  updateUI()
+}
+
+setInterval(()=>{if(Math.random()<.34)spawnGolden()},18000)
+
+function createChips(){
+  for(let i=0;i<16;i++){
+    const chip=document.createElement('div')
+    chip.className='chip'
+    chip.style.top=(Math.random()*78+11)+'%'
+    chip.style.left=(Math.random()*78+11)+'%'
+    cookieEl.appendChild(chip)
+  }
+}
+
+function getSaveData(){
+  return {
+    cookies,totalCookies,cookiesSincePrestige,totalClicks,clickPower,critChance,globalBonus,
+    achievementPoints,prestigePoints,burstCooldownUntil,buyAmount,
+    items:items.map(i=>({amount:i.amount})),
+    clickUpgrades:clickUpgrades.map(u=>({bought:u.bought})),
+    achievements:achievements.map(a=>({id:a.id,unlocked:a.unlocked}))
+  }
+}
+
+function applySaveData(data){
+  cookies=data.cookies||0
+  totalCookies=data.totalCookies||data.cookies||0
+  cookiesSincePrestige=data.cookiesSincePrestige||0
+  totalClicks=data.totalClicks||0
+  achievementPoints=data.achievementPoints||0
+  prestigePoints=data.prestigePoints||0
+  burstCooldownUntil=data.burstCooldownUntil||0
+  buyAmount=[1,10,25].includes(data.buyAmount)?data.buyAmount:1
+
+  items.forEach((item,i)=>item.amount=(data.items&&data.items[i]&&data.items[i].amount)||0)
+  clickUpgrades.forEach((u,i)=>u.bought=Boolean(data.clickUpgrades&&data.clickUpgrades[i]&&data.clickUpgrades[i].bought))
+
+  clickPower=1
+  critChance=.05
+  globalBonus=1
+  clickUpgrades.forEach(u=>{if(u.bought)u.apply()})
+
+  achievements.forEach(a=>a.unlocked=false)
+  if(Array.isArray(data.achievements)){
+    data.achievements.forEach(saved=>{
+      const match=achievements.find(a=>a.id===saved.id)
+      if(match)match.unlocked=Boolean(saved.unlocked)
+    })
+  }
+  achievementPoints=achievements.filter(a=>a.unlocked).length
+
+  recalcCPS()
+  setBuyAmount(buyAmount)
+  updateUI()
+}
+
+function exportSave(){
+  const saveData=getSaveData()
+  saveBox.value=btoa(JSON.stringify(saveData))
+}
+
+function importSave(){
+  try{
+    const data=JSON.parse(atob(saveBox.value.trim()))
+    applySaveData(data)
+    showBanner('Save imported successfully','good')
+    logEvent('Save imported','good')
+  }catch(e){
+    alert('Invalid save code!')
+  }
+}
+
+function autoSave(){
+  localStorage.setItem('cookieDeluxeAutoSave',btoa(JSON.stringify(getSaveData())))
+  autoSaveInfo.textContent='Auto-save: '+new Date().toLocaleTimeString()
+}
+
+function loadAutoSave(){
+  try{
+    const raw=localStorage.getItem('cookieDeluxeAutoSave')
+    if(!raw){
+      showBanner('No auto-save found','bad')
+      return
+    }
+    applySaveData(JSON.parse(atob(raw)))
+    showBanner('Auto-save loaded','good')
+    logEvent('Loaded auto-save from local storage','good')
+  }catch(e){
+    showBanner('Auto-save load failed','bad')
+  }
+}
+
+function resetEverything(){
+  if(!confirm('Reset everything? This will erase all progress and auto-save data.'))return
+  resetRunProgress()
+  totalCookies=0
+  totalClicks=0
+  achievementPoints=0
+  prestigePoints=0
+  buyAmount=1
+  achievements.forEach(a=>a.unlocked=false)
+  localStorage.removeItem('cookieDeluxeAutoSave')
+  saveBox.value=''
+  autoSaveInfo.textContent='Auto-save: cleared'
+  setBuyAmount(1)
+  updateUI()
+  showBanner('All progress reset','bad')
+  logEvent('All progress and auto-save data were reset.','bad')
+}
+
+createChips()
+createShop()
+createUpgrades()
+recalcCPS()
+updateUI()
+setBuyAmount(1)
+setInterval(autoSave,20000)
+logEvent('Game started fresh. Use Load Auto Save to restore progress.','good')
+</script>
+
+</body>
+</html>
