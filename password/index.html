@@ -251,7 +251,7 @@
 
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 0.95rem;
     }
 
@@ -260,8 +260,9 @@
       background: linear-gradient(160deg, rgba(15, 30, 58, 0.94), rgba(8, 16, 34, 0.95));
       border-radius: 15px;
       padding: 1rem;
-      min-height: 112px;
+      min-height: 176px;
       display: grid;
+      gap: 0.9rem;
       align-content: space-between;
       text-decoration: none;
       color: var(--text-main);
@@ -289,19 +290,40 @@
       transform: translateX(105%);
     }
 
+    .game-card-body,
+    .game-card-foot {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .game-kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      opacity: 0.92;
+    }
+
     .game-name {
       font-size: 1.06rem;
       font-weight: 700;
       letter-spacing: 0.04em;
     }
 
+    .game-description {
+      color: var(--text-dim);
+      font-size: 0.92rem;
+      line-height: 1.48;
+    }
+
     .game-link {
       color: var(--text-dim);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       opacity: 0.92;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      line-height: 1.35;
+      word-break: break-word;
     }
 
     .hint {
@@ -350,7 +372,7 @@
       <div class="hub-inner">
         <div class="hub-head">
           <h2>Game Selection</h2>
-          <p>Choose a game and launch instantly</p>
+          <p>Choose a protected game page, a local archive, or the LuminSDK-powered list</p>
         </div>
         <div id="gamesGrid" class="games-grid"></div>
       </div>
@@ -362,11 +384,48 @@
     const HUB_LAUNCH_KEY = "passwordGameLaunch";
 
     const games = [
-      { name: "Cookie Clicker", url: "https://www.answersthroughathletes.org/password/cookie-clicker" },
-      { name: "Mario", url: "https://www.answersthroughathletes.org/password/mario" },
-      { name: "2048", url: "https://www.answersthroughathletes.org/password/2048" },
-      { name: "Wordle", url: "https://www.answersthroughathletes.org/password/wordle" },
-      { name: "Lumin SDK", url: "https://www.answersthroughathletes.org/password/lumin" },
+      {
+        name: "Browser Game Archive",
+        kicker: "Imported Library",
+        description: "Browse the downloaded GitHub browser-game collection from inside the protected vault.",
+        routeLabel: "/password/browser-library/",
+        url: "./browser-library/"
+      },
+      {
+        name: "Lumin SDK Arcade",
+        kicker: "Quickstart Embed",
+        description: "Switch to the separate LuminSDK game list built from the official quickstart pattern.",
+        routeLabel: "/password/lumin/",
+        url: "./lumin/"
+      },
+      {
+        name: "Cookie Clicker",
+        kicker: "Standalone",
+        description: "Jump straight into the existing clicker page from the vault hub.",
+        routeLabel: "/password/cookie-clicker/",
+        url: "./cookie-clicker/"
+      },
+      {
+        name: "Mario",
+        kicker: "Standalone",
+        description: "Launch the current Mario page through the same protected flow.",
+        routeLabel: "/password/mario/",
+        url: "./mario/"
+      },
+      {
+        name: "2048",
+        kicker: "Standalone",
+        description: "Open the space-themed 2048 page from the guarded hub.",
+        routeLabel: "/password/2048/",
+        url: "./2048/"
+      },
+      {
+        name: "Wordle",
+        kicker: "Standalone",
+        description: "Load the Wordle page without exposing it outside this password index route.",
+        routeLabel: "/password/wordle/",
+        url: "./wordle/"
+      }
     ];
 
     let currentInput = "";
@@ -380,6 +439,17 @@
     function normalizePath(pathname) {
       const normalized = (pathname || "/").replace(/\/+$/, "");
       return normalized || "/";
+    }
+
+    function launchProtected(targetUrl) {
+      localStorage.setItem(
+        HUB_LAUNCH_KEY,
+        JSON.stringify({
+          path: normalizePath(targetUrl.pathname),
+          expiresAt: Date.now() + 20000
+        })
+      );
+      window.location.assign(targetUrl.href);
     }
 
     function renderDisplay() {
@@ -461,33 +531,26 @@
     function buildGames() {
       gamesGrid.innerHTML = "";
       games.forEach((game) => {
+        const targetUrl = new URL(game.url, window.location.href);
         const card = document.createElement("a");
         card.className = "game-card";
-        card.href = game.url;
+        card.href = targetUrl.href;
         card.innerHTML = `
-          <div class="game-name">${game.name}</div>
-          <div class="game-link">${game.url}</div>
+          <div class="game-card-body">
+            <div class="game-kicker">${game.kicker}</div>
+            <div class="game-name">${game.name}</div>
+            <div class="game-description">${game.description}</div>
+          </div>
+          <div class="game-card-foot">
+            <div class="game-link">${game.routeLabel}</div>
+          </div>
         `;
 
-        if (game.placeholder) {
-          card.addEventListener("click", (e) => {
-            e.preventDefault();
-            alert("Add your next game by editing the games array in index.html.");
-          });
-          card.setAttribute("aria-disabled", "true");
-        } else {
-          card.addEventListener("click", () => {
-            const gamePath = normalizePath(new URL(game.url).pathname);
-            const launchData = {
-              path: gamePath,
-              expiresAt: Date.now() + 15000
-            };
-            localStorage.setItem(HUB_LAUNCH_KEY, JSON.stringify(launchData));
-          });
-        }
+        card.addEventListener("click", (event) => {
+          event.preventDefault();
+          launchProtected(targetUrl);
+        });
 
-        card.target = "_blank";
-        card.rel = "noopener noreferrer";
         gamesGrid.appendChild(card);
       });
     }

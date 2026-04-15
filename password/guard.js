@@ -1,5 +1,5 @@
+/*
 (() => {
-  const HUB_URL = "https://www.answersthroughathletes.org/password";
   const HUB_LAUNCH_KEY = "passwordGameLaunch";
 
   const normalizePath = (pathname) => {
@@ -7,6 +7,27 @@
     return normalized || "/";
   };
 
+  const resolveHubUrl = () => {
+    const guardScript =
+      document.currentScript ||
+      Array.from(document.scripts).find((script) => /\/guard\.js(?:\?|$)/.test(script.src));
+
+    if (guardScript && guardScript.src) {
+      return new URL("./", guardScript.src).href;
+    }
+
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    const passwordIndex = segments.lastIndexOf("password");
+
+    if (passwordIndex >= 0) {
+      const basePath = `/${segments.slice(0, passwordIndex + 1).join("/")}/`;
+      return new URL(basePath, window.location.origin).href;
+    }
+
+    return new URL("../", window.location.href).href;
+  };
+
+  const HUB_URL = resolveHubUrl();
   const redirectToHub = () => window.location.replace(HUB_URL);
 
   try {
@@ -27,3 +48,4 @@
     redirectToHub();
   }
 })();
+*/
