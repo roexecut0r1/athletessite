@@ -1,0 +1,41 @@
+# Build artifacts
+output/
+*.iso
+*.squashfs
+*.qcow2
+
+# Debian packages
+*.deb
+
+# Temporary build directories
+/tmp/
+chroot/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+venv/
+.env/
+
+# Generated assets (regenerate with build-scripts/)
+# Uncomment if you want to track them in git:
+# wallpapers/classic/*.png
+# wallpapers/modern/*.png  
+# wallpapers/dark-glam/*.png
+# config/grub/background.png
+# config/plymouth/hml-theme/*.png
+# config/sddm/hml-theme/background.png

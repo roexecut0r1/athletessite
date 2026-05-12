@@ -1,0 +1,15 @@
+[General]
+BrowserApplication=firefox.desktop
+
+[Style]
+WidgetStyle=Breeze
+
+[Locale]
+DateFormatShort=%m/%d/%Y
+
+[Splash Screen]
+Engine=none
+Theme=hml.reimagined
+
+[Feedback]
+EnableFeedback=false

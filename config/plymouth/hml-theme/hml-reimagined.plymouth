@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=HML Reimagined
+Description=Boot splash for HML Reimagined — Hannah Montana Linux Reboot
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/hml-reimagined
+ScriptFile=/usr/share/plymouth/themes/hml-reimagined/hml-reimagined.script

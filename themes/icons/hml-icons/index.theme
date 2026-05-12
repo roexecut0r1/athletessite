@@ -1,0 +1,42 @@
+[Icon Theme]
+Name=HML Icons
+Comment=Icon theme for HML Reimagined — pink/purple accents on Breeze base
+Inherits=breeze,breeze-dark,hicolor
+Example=folder
+
+Directories=scalable/places,scalable/apps,scalable/actions,scalable/mimetypes,scalable/status
+
+[scalable/places]
+Size=64
+MinSize=16
+MaxSize=256
+Type=Scalable
+Context=Places
+
+[scalable/apps]
+Size=64
+MinSize=16
+MaxSize=256
+Type=Scalable
+Context=Applications
+
+[scalable/actions]
+Size=64
+MinSize=16
+MaxSize=256
+Type=Scalable
+Context=Actions
+
+[scalable/mimetypes]
+Size=64
+MinSize=16
+MaxSize=256
+Type=Scalable
+Context=MimeTypes
+
+[scalable/status]
+Size=64
+MinSize=16
+MaxSize=256
+Type=Scalable
+Context=Status

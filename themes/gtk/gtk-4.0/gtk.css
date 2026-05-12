@@ -1,0 +1,24 @@
+/* HML Reimagined — GTK 4.0 Theme */
+/* Extends the GTK3 theme with GTK4-specific adjustments */
+@import url("../gtk-3.0/gtk.css");
+
+/* GTK4-specific overrides */
+window.background {
+    background-color: #1A0A1E;
+}
+
+.navigation-sidebar row:selected {
+    background-color: alpha(#FF1493, 0.2);
+}
+
+columnview row:selected {
+    background: linear-gradient(90deg, alpha(#FF1493, 0.25), alpha(#9C27B0, 0.15));
+}
+
+toast {
+    background: #231030;
+    border: 1px solid rgba(156, 39, 176, 0.3);
+    border-radius: 999px;
+    padding: 8px 16px;
+    color: #E0CCE6;
+}

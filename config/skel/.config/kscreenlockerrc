@@ -1,0 +1,16 @@
+[General]
+color=13,5,16
+fontSize=11
+font=Inter,11,-1,5,50,0,0,0,0,0,Regular
+
+[Greeter]
+WallpaperPlugin=org.kde.image
+Theme=hml.reimagined
+
+[Greeter][Wallpaper][org.kde.image][General]
+Image=/usr/share/wallpapers/HML-Reimagined/contents/images/modern/hml-modern-4k.png
+PreviewImage=/usr/share/wallpapers/HML-Reimagined/contents/images/modern/hml-modern-1080p.png
+FillMode=1
+
+[Greeter][Appearance]
+LockScreenUiVisible=true

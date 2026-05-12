@@ -1,0 +1,11 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "HML Reimagined Team" }],
+        "Description": "HML Reimagined Plasma Desktop Theme — glassmorphism meets pop-star glamour",
+        "Id": "hml",
+        "License": "MIT",
+        "Name": "HML Reimagined",
+        "Version": "1.0"
+    },
+    "X-Plasma-API": "5.0"
+}

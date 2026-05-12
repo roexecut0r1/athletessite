@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HML Reimagined — The Best of Both Worlds</title>
+    <meta name="description" content="A modern, fully-usable reimagining of Hannah Montana Linux. Built on Ubuntu 24.04 LTS.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D0510;
+            color: #E0CCE6;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background glow */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 20, 147, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(156, 39, 176, 0.15), transparent 40%);
+            animation: pulse 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #FF1493;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav a {
+            color: #E0CCE6;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: #FF1493; }
+
+        .hero {
+            text-align: center;
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #FF1493, #E040FB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #8C7896;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #FF1493, #9C27B0);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 20, 147, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FF1493;
+            color: #FF1493;
+            margin-left: 20px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 20, 147, 0.1);
+            box-shadow: none;
+        }
+
+        /* Mockup showcase */
+        .showcase {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto 120px;
+            perspective: 1000px;
+        }
+
+        .browser-mockup {
+            background: rgba(26, 10, 30, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(156, 39, 176, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,20,147,0.1);
+            transform: rotateX(5deg);
+            transition: transform 0.5s;
+        }
+
+        .showcase:hover .browser-mockup {
+            transform: rotateX(0deg);
+        }
+
+        .browser-header {
+            background: rgba(45, 21, 64, 0.8);
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(156, 39, 176, 0.2);
+        }
+
+        .dot {
+            width: 12px; height: 12px; border-radius: 50%;
+        }
+
+        .browser-content {
+            height: 500px;
+            background: url('https://raw.githubusercontent.com/hml-reimagined/hml-reimagined/main/wallpapers/dark-glam/hml-dark-glam-1080p.png') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Features grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            background: rgba(26, 10, 30, 0.4);
+            border: 1px solid rgba(156, 39, 176, 0.2);
+            padding: 40px;
+            border-radius: 16px;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(45, 21, 64, 0.6);
+            border-color: #FF1493;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FF1493, #E040FB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #FFFFFF;
+        }
+
+        .feature-card p {
+            color: #8C7896;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid rgba(156, 39, 176, 0.2);
+            color: #8C7896;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .features { grid-template-columns: 1fr; }
+            .btn-outline { margin-left: 0; margin-top: 16px; display: block; }
+            .browser-content { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <a href="#" class="logo">✨ HML Reimagined</a>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#modes">Modes</a>
+                <a href="https://github.com/hml-reimagined">GitHub</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>You Got The Best<br>Of Both Worlds</h1>
+            <p>The legendary 2009 meme distro, entirely rebuilt for the modern era. Ubuntu 24.04 LTS foundation. KDE Plasma 6. Wayland. Perfect for daily driving.</p>
+            <div>
+                <a href="#" class="btn">✨ Download v1.0 ISO</a>
+                <a href="#" class="btn btn-outline">Read the Docs</a>
+            </div>
+        </section>
+
+        <section class="showcase">
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="dot" style="background: #FF5252;"></div>
+                    <div class="dot" style="background: #FFD54F;"></div>
+                    <div class="dot" style="background: #69F0AE;"></div>
+                </div>
+                <div class="browser-content">
+                    <h2 style="color: white; font-size: 2rem; text-shadow: 0 4px 20px rgba(255,20,147,0.8);">✨ Welcome to Dark Glam Mode</h2>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Modern Foundation</h3>
+                <p>Built on Ubuntu 24.04 LTS (Noble Numbat). Full UEFI & Secure Boot support. PipeWire audio. Wayland graphics. It just works.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Three Visual Modes</h3>
+                <p>Toggle instantly between Classic HML (glitter overload), Modern HML (daily driver), and Dark Glam (neon gamer aesthetic).</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <h3>Control Center</h3>
+                <p>Our custom Python application lets you manage themes, system sounds, RGB integrations, and performance modes with one click.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>HML Reimagined 1.0 "Superstar" — A fan project. Not affiliated with Disney.</p>
+            <p style="margin-top: 8px;">Built with ✨ and open source software.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Generate random sparkles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.width = sparkle.style.height = (Math.random() * 4 + 2) + 'px';
+            sparkle.style.animationDelay = Math.random() * 5 + 's';
+            sparkle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            particlesContainer.appendChild(sparkle);
+        }
+    </script>
+</body>
+</html>

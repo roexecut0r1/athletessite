@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=HML First Boot Setup
+Comment=Configure HML Reimagined on first login
+Exec=/usr/share/hml-reimagined/first-boot.sh
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-KDE-autostart-after=panel

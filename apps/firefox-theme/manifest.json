@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+  "name": "HML Reimagined Theme",
+  "version": "1.0",
+  "description": "The official Firefox theme for HML Reimagined Linux",
+  "theme": {
+    "colors": {
+      "frame": "#0D0510",
+      "frame_inactive": "#080310",
+      "tab_background_text": "#E0CCE6",
+      "tab_selected": "#1A0A1E",
+      "tab_text": "#E0CCE6",
+      "tab_line": "#FF1493",
+      "tab_loading": "#E040FB",
+      "toolbar": "#1A0A1E",
+      "toolbar_text": "#E0CCE6",
+      "toolbar_field": "#12071A",
+      "toolbar_field_text": "#E0CCE6",
+      "toolbar_field_border": "#9C27B033",
+      "toolbar_field_focus": "#1A0A1E",
+      "toolbar_field_border_focus": "#FF1493",
+      "toolbar_top_separator": "transparent",
+      "toolbar_bottom_separator": "#9C27B044",
+      "ntp_background": "#0D0510",
+      "ntp_text": "#E0CCE6",
+      "popup": "#1A0A1E",
+      "popup_text": "#E0CCE6",
+      "popup_border": "#9C27B044",
+      "popup_highlight": "#FF149333",
+      "popup_highlight_text": "#FFFFFF",
+      "sidebar": "#12071A",
+      "sidebar_text": "#E0CCE6",
+      "sidebar_border": "#9C27B033",
+      "sidebar_highlight": "#FF149333",
+      "sidebar_highlight_text": "#FFFFFF",
+      "bookmark_text": "#E0CCE6",
+      "button_background_hover": "#FF149322",
+      "button_background_active": "#FF149344",
+      "icons": "#E0CCE6",
+      "icons_attention": "#FF1493"
+    },
+    "properties": {
+      "color_scheme": "dark",
+      "content_color_scheme": "dark"
+    }
+  }
+}

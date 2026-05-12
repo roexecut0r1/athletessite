@@ -1,0 +1,8 @@
+[Sound Theme]
+Name=HML Reimagined
+Comment=System sound theme for HML Reimagined Linux — sparkly pop-star energy
+Inherits=freedesktop
+Directories=stereo
+
+[stereo]
+OutputProfile=stereo

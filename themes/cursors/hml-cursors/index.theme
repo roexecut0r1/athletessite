@@ -1,0 +1,23 @@
+[Cursor Theme]
+Name=HML Cursors
+Comment=Pink cursor theme for HML Reimagined
+Inherits=breeze_cursors
+Example=default
+
+# Note: To create actual cursor files, use xcursorgen with custom PNGs.
+# This theme inherits from Breeze cursors as a base.
+# For custom cursors, generate X11 cursor files:
+#
+# 1. Create cursor PNGs at sizes: 24, 32, 48, 64
+# 2. Create a .cursor config file for each cursor:
+#    24 4 4 cursor-24.png
+#    32 5 5 cursor-32.png
+#    48 8 8 cursor-48.png
+#    64 10 10 cursor-64.png
+# 3. Run: xcursorgen default.cursor cursors/default
+# 4. Repeat for all cursor types (pointer, hand, text, etc.)
+#
+# Common cursor names:
+#   default, pointer, hand1, hand2, text, crosshair,
+#   left_ptr_watch, watch, size_ver, size_hor, size_fdiag, size_bdiag,
+#   move, copy, no-drop, dnd-none, dnd-copy, dnd-move

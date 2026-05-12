@@ -1,0 +1,10 @@
+[Notifications]
+LowPriorityHistory=true
+PopupPosition=BottomRight
+
+[Sounds]
+theme=hml-reimagined
+EventSoundsEnabled=true
+
+[Services]
+Startup=hml-first-boot.desktop

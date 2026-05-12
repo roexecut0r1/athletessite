@@ -1,0 +1,63 @@
+Source: hml-reimagined-theme
+Section: x11
+Priority: optional
+Maintainer: HML Reimagined Team <hml@reimagined.dev>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/hml-reimagined
+
+Package: hml-reimagined-theme
+Architecture: all
+Depends: ${misc:Depends}, breeze, plasma-workspace
+Recommends: hml-reimagined-sounds, hml-reimagined-wallpapers, hml-reimagined-control-center
+Description: HML Reimagined desktop theme
+ Complete desktop theming package for HML Reimagined Linux.
+ Includes KDE Plasma theme, color schemes, GTK themes, icon theme,
+ cursor theme, SDDM login theme, GRUB theme, and Plymouth boot splash.
+
+Package: hml-reimagined-sounds
+Architecture: all
+Depends: ${misc:Depends}
+Description: HML Reimagined sound theme
+ System sound theme for HML Reimagined Linux.
+ Includes notification, login/logout, and UI interaction sounds.
+
+Package: hml-reimagined-wallpapers
+Architecture: all
+Depends: ${misc:Depends}
+Description: HML Reimagined wallpaper collection
+ Wallpaper packs for HML Reimagined Linux.
+ Includes Classic, Modern, and Dark Glam variants in 4K and 1080p.
+
+Package: hml-reimagined-control-center
+Architecture: all
+Depends: ${misc:Depends}, python3, python3-pyqt6
+Description: HML Control Center
+ Theme and customization manager for HML Reimagined Linux.
+ Switch between modes, toggle sounds, change wallpapers, and more.
+
+Package: hml-reimagined-meta
+Architecture: all
+Depends: ${misc:Depends},
+ hml-reimagined-theme,
+ hml-reimagined-sounds,
+ hml-reimagined-wallpapers,
+ hml-reimagined-control-center,
+ kubuntu-desktop,
+ calamares,
+ flatpak,
+ plasma-discover-backend-flatpak,
+ pipewire,
+ firefox,
+ vlc,
+ libreoffice,
+ gimp,
+ krita,
+ obs-studio,
+ steam-installer,
+ kde-connect,
+ neofetch,
+ zsh,
+ fonts-inter
+Description: HML Reimagined metapackage
+ Metapackage that pulls in all components of HML Reimagined Linux.

@@ -1,0 +1,8 @@
+[Mouse]
+cursorTheme=hml-cursors
+cursorSize=24
+
+[Keyboard]
+RepeatDelay=400
+RepeatRate=25
+NumLock=0

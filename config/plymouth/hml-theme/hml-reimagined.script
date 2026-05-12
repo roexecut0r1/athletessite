@@ -1,0 +1,125 @@
+// ═══════════════════════════════════════════════════════════════════
+// HML Reimagined — Plymouth Boot Splash Script
+// Animated star logo with glowing progress bar and sparkle effects
+// ═══════════════════════════════════════════════════════════════════
+
+// ── Background ───────────────────────────────────────────────────
+Window.SetBackgroundTopColor(0.05, 0.02, 0.08);     // Deep purple-black
+Window.SetBackgroundBottomColor(0.02, 0.01, 0.04);   // Near black
+
+// ── Screen geometry ──────────────────────────────────────────────
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+center_x = screen_width / 2;
+center_y = screen_height / 2;
+
+// ── Logo ─────────────────────────────────────────────────────────
+logo_image = Image("logo.png");
+logo_width = logo_image.GetWidth();
+logo_height = logo_image.GetHeight();
+logo_sprite = Sprite(logo_image);
+logo_sprite.SetX(center_x - logo_width / 2);
+logo_sprite.SetY(center_y - logo_height / 2 - 60);
+logo_sprite.SetZ(100);
+logo_sprite.SetOpacity(1.0);
+
+// ── Title text ───────────────────────────────────────────────────
+title_image = Image("title.png");
+title_sprite = Sprite(title_image);
+title_sprite.SetX(center_x - title_image.GetWidth() / 2);
+title_sprite.SetY(center_y + logo_height / 2 - 30);
+title_sprite.SetZ(100);
+
+// ── Progress bar ─────────────────────────────────────────────────
+bar_width = 400;
+bar_height = 6;
+bar_x = center_x - bar_width / 2;
+bar_y = center_y + logo_height / 2 + 40;
+
+// Background bar (dark)
+bar_bg = Image("progress_bg.png");
+if (!bar_bg) {
+    bar_bg = Image.Text("", 0.1, 0.05, 0.12);
+}
+bar_bg_sprite = Sprite(bar_bg);
+bar_bg_sprite.SetPosition(bar_x, bar_y, 90);
+
+// Foreground bar (pink gradient)
+bar_fg = Image("progress_fg.png");
+bar_fg_sprite = Sprite(bar_fg);
+bar_fg_sprite.SetPosition(bar_x, bar_y, 95);
+
+progress = 0;
+
+fun progress_callback(duration, progress_val) {
+    progress = progress_val;
+    if (bar_fg) {
+        bar_fg_sprite.SetImage(bar_fg.Scale(bar_width * progress, bar_height));
+    }
+}
+Plymouth.SetBootProgressFunction(progress_callback);
+
+// ── Sparkle animation ────────────────────────────────────────────
+// Create a simple pulsing glow effect around the logo
+glow_image = Image("glow.png");
+if (glow_image) {
+    glow_sprite = Sprite(glow_image);
+    glow_sprite.SetX(center_x - glow_image.GetWidth() / 2);
+    glow_sprite.SetY(center_y - glow_image.GetHeight() / 2 - 60);
+    glow_sprite.SetZ(50);
+    glow_opacity = 0.3;
+    glow_direction = 1;
+}
+
+fun refresh_callback() {
+    // Pulse the glow
+    if (glow_image) {
+        glow_opacity = glow_opacity + (0.005 * glow_direction);
+        if (glow_opacity >= 0.7) glow_direction = -1;
+        if (glow_opacity <= 0.2) glow_direction = 1;
+        glow_sprite.SetOpacity(glow_opacity);
+    }
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+// ── Password prompt ──────────────────────────────────────────────
+fun display_password_callback(prompt, bullets) {
+    prompt_image = Image.Text(prompt, 0.88, 0.08, 0.58);  // Pink text
+    prompt_sprite = Sprite(prompt_image);
+    prompt_sprite.SetX(center_x - prompt_image.GetWidth() / 2);
+    prompt_sprite.SetY(bar_y + 40);
+    prompt_sprite.SetZ(100);
+    
+    // Draw bullet dots
+    bullet_str = "";
+    for (i = 0; i < bullets; i++) {
+        bullet_str = bullet_str + "● ";
+    }
+    bullet_image = Image.Text(bullet_str, 0.88, 0.78, 0.90);  // Light pink
+    bullet_sprite = Sprite(bullet_image);
+    bullet_sprite.SetX(center_x - bullet_image.GetWidth() / 2);
+    bullet_sprite.SetY(bar_y + 70);
+    bullet_sprite.SetZ(100);
+}
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+// ── Message display ──────────────────────────────────────────────
+message_sprite = Sprite();
+fun message_callback(text) {
+    msg_image = Image.Text(text, 0.61, 0.15, 0.69);  // Purple text
+    message_sprite.SetImage(msg_image);
+    message_sprite.SetX(center_x - msg_image.GetWidth() / 2);
+    message_sprite.SetY(screen_height - 50);
+    message_sprite.SetZ(100);
+}
+Plymouth.SetMessageFunction(message_callback);
+
+// ── Quit ─────────────────────────────────────────────────────────
+fun quit_callback() {
+    logo_sprite.SetOpacity(0);
+    title_sprite.SetOpacity(0);
+    bar_bg_sprite.SetOpacity(0);
+    bar_fg_sprite.SetOpacity(0);
+    if (glow_image) glow_sprite.SetOpacity(0);
+}
+Plymouth.SetQuitFunction(quit_callback);

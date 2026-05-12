@@ -1,0 +1,24 @@
+[General]
+ColorScheme=HMLReimagined
+Name=HML Reimagined
+widgetStyle=Breeze
+fixed=false
+menuFont=Inter,10,-1,5,50,0,0,0,0,0,Regular
+font=Inter,10,-1,5,50,0,0,0,0,0,Regular
+smallestReadableFont=Inter,8,-1,5,50,0,0,0,0,0,Regular
+toolBarFont=Inter,10,-1,5,50,0,0,0,0,0,Regular
+activeFont=Inter,10,-1,5,63,0,0,0,0,0,DemiBold
+
+[Icons]
+Theme=hml-icons
+
+[KDE]
+LookAndFeelPackage=hml.reimagined
+SingleClick=false
+AnimationDurationFactor=0.5
+ShowDeleteCommand=true
+widgetStyle=breeze
+
+[Sounds]
+Theme=hml-reimagined
+Enable=true

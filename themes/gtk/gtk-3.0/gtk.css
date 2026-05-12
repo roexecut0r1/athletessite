@@ -1,0 +1,289 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * HML Reimagined — GTK 3.0 Theme
+ * Pink/purple glassmorphism for GTK applications
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Color definitions ────────────────────────────────────────────── */
+@define-color hml_pink #FF1493;
+@define-color hml_purple #9C27B0;
+@define-color hml_magenta #E040FB;
+@define-color hml_dark #1A0A1E;
+@define-color hml_darker #0D0510;
+@define-color hml_surface #231030;
+@define-color hml_surface_alt #2D1540;
+@define-color hml_silver #E0CCE6;
+@define-color hml_text #E0CCE6;
+@define-color hml_text_dim #8C7896;
+@define-color hml_border rgba(156, 39, 176, 0.3);
+@define-color hml_glow rgba(255, 20, 147, 0.15);
+
+@define-color theme_bg_color @hml_dark;
+@define-color theme_fg_color @hml_text;
+@define-color theme_selected_bg_color @hml_pink;
+@define-color theme_selected_fg_color #FFFFFF;
+@define-color theme_base_color @hml_darker;
+@define-color theme_text_color @hml_text;
+@define-color insensitive_bg_color @hml_surface;
+@define-color insensitive_fg_color @hml_text_dim;
+
+/* ── Global ───────────────────────────────────────────────────────── */
+* {
+    -GtkWidget-link-color: @hml_magenta;
+    -GtkWidget-visited-link-color: @hml_purple;
+    outline-color: alpha(@hml_pink, 0.5);
+    -gtk-secondary-caret-color: @hml_pink;
+}
+
+/* ── Windows ──────────────────────────────────────────────────────── */
+window, .background {
+    background-color: @hml_dark;
+    color: @hml_text;
+}
+
+/* ── Header bars ──────────────────────────────────────────────────── */
+headerbar, .titlebar {
+    background: linear-gradient(to bottom, @hml_surface, @hml_dark);
+    color: @hml_text;
+    border-bottom: 1px solid @hml_border;
+    padding: 6px 8px;
+    min-height: 38px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+headerbar .title, .titlebar .title {
+    color: @hml_pink;
+    font-weight: bold;
+}
+
+headerbar .subtitle {
+    color: @hml_text_dim;
+    font-size: 0.85em;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────── */
+button {
+    background: @hml_surface;
+    color: @hml_text;
+    border: 1px solid @hml_border;
+    border-radius: 8px;
+    padding: 6px 16px;
+    min-height: 24px;
+    transition: all 200ms ease;
+}
+
+button:hover {
+    background: @hml_surface_alt;
+    border-color: alpha(@hml_pink, 0.5);
+    box-shadow: 0 0 8px @hml_glow;
+}
+
+button:active, button:checked {
+    background: linear-gradient(135deg, @hml_pink, @hml_purple);
+    color: white;
+    border-color: @hml_pink;
+}
+
+button.suggested-action {
+    background: linear-gradient(135deg, @hml_pink, @hml_purple);
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+button.suggested-action:hover {
+    background: linear-gradient(135deg, shade(@hml_pink, 1.1), shade(@hml_purple, 1.1));
+    box-shadow: 0 0 12px alpha(@hml_pink, 0.3);
+}
+
+button.destructive-action {
+    background: #C62828;
+    color: white;
+    border: none;
+}
+
+/* ── Entries (text inputs) ────────────────────────────────────────── */
+entry {
+    background: alpha(white, 0.04);
+    color: @hml_text;
+    border: 1px solid @hml_border;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-height: 20px;
+    transition: all 200ms ease;
+}
+
+entry:focus {
+    border-color: @hml_pink;
+    box-shadow: 0 0 8px @hml_glow;
+}
+
+/* ── Lists & Trees ────────────────────────────────────────────────── */
+list, treeview {
+    background: @hml_darker;
+    color: @hml_text;
+}
+
+list row, treeview row {
+    padding: 4px;
+    border-radius: 6px;
+}
+
+list row:hover, treeview row:hover {
+    background: alpha(@hml_purple, 0.15);
+}
+
+list row:selected, treeview row:selected {
+    background: linear-gradient(90deg, alpha(@hml_pink, 0.3), alpha(@hml_purple, 0.2));
+    color: white;
+}
+
+/* ── Scrollbars ───────────────────────────────────────────────────── */
+scrollbar {
+    background: transparent;
+}
+
+scrollbar slider {
+    background: alpha(@hml_purple, 0.4);
+    border-radius: 10px;
+    min-width: 6px;
+    min-height: 6px;
+    transition: all 200ms ease;
+}
+
+scrollbar slider:hover {
+    background: @hml_pink;
+    min-width: 8px;
+}
+
+/* ── Switches ─────────────────────────────────────────────────────── */
+switch {
+    background: @hml_surface;
+    border: 1px solid @hml_border;
+    border-radius: 14px;
+    min-width: 48px;
+    min-height: 24px;
+    transition: all 200ms ease;
+}
+
+switch:checked {
+    background: linear-gradient(90deg, @hml_pink, @hml_purple);
+    border-color: @hml_pink;
+}
+
+switch slider {
+    background: white;
+    border-radius: 50%;
+    min-width: 20px;
+    min-height: 20px;
+    margin: 2px;
+}
+
+/* ── Check & Radio ────────────────────────────────────────────────── */
+check, radio {
+    background: @hml_surface;
+    border: 1px solid @hml_border;
+    min-width: 20px;
+    min-height: 20px;
+    transition: all 200ms ease;
+}
+
+check {
+    border-radius: 4px;
+}
+
+radio {
+    border-radius: 50%;
+}
+
+check:checked, radio:checked {
+    background: @hml_pink;
+    border-color: @hml_pink;
+    color: white;
+}
+
+/* ── Progress bars ────────────────────────────────────────────────── */
+progressbar trough {
+    background: @hml_surface;
+    border-radius: 10px;
+    min-height: 8px;
+}
+
+progressbar progress {
+    background: linear-gradient(90deg, @hml_pink, @hml_purple);
+    border-radius: 10px;
+    min-height: 8px;
+}
+
+/* ── Menus ─────────────────────────────────────────────────────────── */
+menu, .menu, popover, .popup {
+    background: @hml_dark;
+    border: 1px solid @hml_border;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+menuitem, modelbutton {
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 150ms ease;
+}
+
+menuitem:hover, modelbutton:hover {
+    background: alpha(@hml_pink, 0.15);
+    color: @hml_pink;
+}
+
+/* ── Tabs (Notebooks) ─────────────────────────────────────────────── */
+notebook {
+    background: @hml_dark;
+}
+
+notebook header tab {
+    padding: 8px 16px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: @hml_text_dim;
+    transition: all 200ms ease;
+}
+
+notebook header tab:checked {
+    color: @hml_pink;
+    border-bottom-color: @hml_pink;
+}
+
+notebook header tab:hover:not(:checked) {
+    color: @hml_text;
+    border-bottom-color: alpha(@hml_purple, 0.4);
+}
+
+/* ── Tooltips ─────────────────────────────────────────────────────── */
+tooltip, .tooltip {
+    background: @hml_surface;
+    border: 1px solid @hml_border;
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: @hml_text;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────────── */
+.sidebar, placessidebar {
+    background: @hml_darker;
+    border-right: 1px solid @hml_border;
+}
+
+.sidebar row:selected, placessidebar row:selected {
+    background: alpha(@hml_pink, 0.2);
+    color: @hml_pink;
+}
+
+/* ── Spinners ─────────────────────────────────────────────────────── */
+spinner {
+    color: @hml_pink;
+}
+
+/* ── File chooser ─────────────────────────────────────────────────── */
+placessidebar row image {
+    color: @hml_magenta;
+}
